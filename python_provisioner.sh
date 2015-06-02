@@ -22,16 +22,28 @@ pip install virtualenv
 pip install numpy
 pip install pandas
 
-## tophat
-wget http://ccb.jhu.edu/software/tophat/downloads/tophat-2.0.13.Linux_x86_64.tar.gz
-tar xzf tophat-2.0.13.Linux_x86_64.tar.gz -C /opt/
 
-## samtools
-wget "http://downloads.sourceforge.net/project/samtools/samtools/1.1/samtools-1.1.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsamtools%2Ffiles%2Fsamtools%2F1.1%2F&ts=1422924881&use_mirror=iweb" -O samtools-1.1.tar.bz2
-tar xjf samtools-1.1.tar.bz2
-make
-make install prefix=/opt/samtools-1.1/
-cd ..
+## For cloudbiolinux
+apt-get remove python-fabric
+apt-get clean all
+pip install fabric
+git clone git://github.com/chapmanb/cloudbiolinux.git
+cd cloudbiolinux
+fab -f fabfile.py -H localhost install_biolinux:flavor=ngs_pipeline_minimal
+
+
+## For Sailfish
+mkdir ~/external-software/
+cd ~/external-software
+https://github.com/kingsfordgroup/sailfish/releases/download/v0.6.3/Sailfish-0.6.3-Linux_x86-64.tar.gz
+tar -xvzf Sailfish-0.6.3-Linux_x86-64.tar.gz
+export LD_LIBRARY_PATH=~/external-software/Sailfish-0.6.3-Linux_x86-64/lib:$LD_LIBRARY_PATH
+export PATH=~/external-software/Sailfish-0.6.3-Linux_x86-64/bin:$PATH
+
+
+# AWS CLI
+pip install awscli
+
 
 ## Cleanup
 rm -rf /tmp/downloaded_packages/ /tmp/*.rds
