@@ -32,12 +32,6 @@
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
-        },
-        {
-            "type": "file",
-            "source": "synapseConfigPCBC",
-            "destination": "/home/ubuntu/.synapseConfig"
         }
-        
     ]
 }
