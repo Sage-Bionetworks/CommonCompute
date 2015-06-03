@@ -21,6 +21,13 @@
     "provisioners": [
         {
             "type": "shell",
+            "scripts": ["software_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
             "scripts": ["python_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
@@ -32,6 +39,11 @@
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
-        }
+        },
+	{
+	    "type": "file",
+	    "destination": "./modulefiles/"
+	    "source": "/usr/local/Modules/3.2.10/modulefiles",
+	}
     ]
 }
