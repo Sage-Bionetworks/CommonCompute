@@ -12,7 +12,7 @@
             "region": "us-east-1",
             "source_ami": "ami-765b3e1f",
             "ssh_username": "ubuntu",
-            "ami_name": "ubuntu12.04-StarCluster {{timestamp}}",
+            "ami_name": "ubuntu12.04-SageCommonCompute {{timestamp}}",
             "instance_type": "m3.large"
         }
         
