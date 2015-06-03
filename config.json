@@ -42,8 +42,8 @@
         },
 	{
 	    "type": "file",
-	    "destination": "./modulefiles/"
-	    "source": "/usr/local/Modules/3.2.10/modulefiles",
+	    "source": "./modulefiles/",
+	    "destination": "/usr/local/Modules/3.2.10/modulefiles"
 	}
     ]
 }
