@@ -32,6 +32,7 @@ cd cloudbiolinux
 fab -f fabfile.py -H localhost install_biolinux:flavor=ngs_pipeline_minimal
 
 ## For Sailfish
+# This needs the module file at modulefiles/Sailfish/0.6.3
 cd /opt/
 wget "https://github.com/kingsfordgroup/sailfish/releases/download/v0.6.3/Sailfish-0.6.3-Linux_x86-64.tar.gz" -O Sailfish-0.6.3-Linux_x86-64.tar.gz
 tar -xvzf Sailfish-0.6.3-Linux_x86-64.tar.gz
