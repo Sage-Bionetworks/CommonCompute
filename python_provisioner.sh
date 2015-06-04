@@ -24,7 +24,6 @@ pip install virtualenv
 pip install numpy
 pip install pandas
 
-
 ## For cloudbiolinux
 ## Upgrade this first due to config file conflict
 apt-get -o Dpkg::Options::="--force-confnew" install -y cloud-init
