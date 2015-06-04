@@ -28,13 +28,16 @@ ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r
 ln -s /usr/share/doc/littler/examples/installGithub.r /usr/local/bin/installGithub.r
 ln -s /usr/share/doc/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
 
-## Set a default CRAN Repo
-echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
+## Set a default CRAN repo
+echo 'options(repo = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
-r -e 'install.packages("docopt", repo="http://cran.rstudio.com/")'
+## Use the default CRAN repo with littler
+echo 'source("/etc/R/Rprofile.site")' >> /etc/littler.r
+
+install.r docopt
 
 ## For the R client
 apt-get install -y curl libcurl4-openssl-dev
-install2.r -r http://cran.rstudio.com/ RJSONIO RCurl digest
+install.r RJSONIO RCurl digest
 
 r -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
