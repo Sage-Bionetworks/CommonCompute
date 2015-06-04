@@ -1,13 +1,13 @@
 #!/bin/bash -x
 
-pushd /root/src/
+cd /root/src/
 
 apt-get update
 apt-get install -y --no-install-recommends ed less locales wget
 apt-get install -y python python3 python-dev build-essential
 
-apt-get install ipython
-apt-get install cython
+apt-get install -y ipython
+apt-get install -y cython
 
 ## For Snakemake
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.2
@@ -32,9 +32,9 @@ apt-get clean all
 pip install fabric
 git clone git://github.com/chapmanb/cloudbiolinux.git
 
-pushd cloudbiolinux
+cd cloudbiolinux
 fab -f fabfile.py -H localhost install_biolinux:flavor=ngs_pipeline_minimal
-popd
+cd -
 
 
 ## For Sailfish
