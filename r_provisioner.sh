@@ -16,13 +16,14 @@ apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480
 echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ precise/" > /etc/apt/sources.list.d/r-cran.list
 apt-get update
 
-## For R 3.2
+## For R 3.2, Ubuntu repositories only have R 2.14
 
 export R_BASE_VERSION=3.2.0-4
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
 apt-get install -y --no-install-recommends r-base=${R_BASE_VERSION}* r-base-dev=${R_BASE_VERSION}* r-recommended=${R_BASE_VERSION}*
 
+# New version of littler, useful for automated install
 git clone https://github.com/eddelbuettel/littler
 cd littler
 sh bootstrap && make install
