@@ -16,28 +16,25 @@ sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ precise/" > /etc/apt/sources.list.d/r-cran.list
 apt-get update
 
-## For R 3.2, Ubuntu repositories only have R 2.14
+## For R 3.1, Ubuntu repositories only have R 2.14
 
-export R_BASE_VERSION=3.2.0-4
+export R_BASE_VERSION=3.1.3-1
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
 apt-get install -y --no-install-recommends littler r-base=${R_BASE_VERSION}* r-base-dev=${R_BASE_VERSION}* r-recommended=${R_BASE_VERSION}*
 
-ln -s /root/src/littler/examples/install.r /usr/local/bin/install.r
-ln -s /root/src/littler/examples/install2.r /usr/local/bin/install2.r
-ln -s /root/src/littler/examples/installGithub.r /usr/local/bin/installGithub.r
-ln -s /root/src/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
+ln -s /usr/share/doc/littler/examples/install.r /usr/local/bin/install.r
+ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r
+ln -s /usr/share/doc/littler/examples/installGithub.r /usr/local/bin/installGithub.r
+ln -s /usr/share/doc/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
 
 ## Set a default CRAN Repo
 echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
-install.r docopt
+r -e 'install.packages("docopt", repo="http://cran.rstudio.com/")'
 
 ## For the R client
-apt-get install -y curl libcurl3-openssl-dev
-install.r RJSONIO RCurl digest
+apt-get install -y curl libcurl4-openssl-dev
+install2.r -r http://cran.rstudio.com/ RJSONIO RCurl digest
 
-echo -e '#!/usr/bin/Rscript\nsource("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))' > /root/src/installsynapse.R
-Rscript /root/src/installsynapse.R
-
-rm /root/src/installsynapse.R
+r -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
