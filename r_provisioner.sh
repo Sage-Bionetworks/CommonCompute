@@ -21,13 +21,7 @@ apt-get update
 export R_BASE_VERSION=3.2.0-4
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
-apt-get install -y --no-install-recommends r-base=${R_BASE_VERSION}* r-base-dev=${R_BASE_VERSION}* r-recommended=${R_BASE_VERSION}*
-
-# New version of littler, useful for automated install
-git clone https://github.com/eddelbuettel/littler
-cd littler
-sh bootstrap && make install
-cd -
+apt-get install -y --no-install-recommends littler r-base=${R_BASE_VERSION}* r-base-dev=${R_BASE_VERSION}* r-recommended=${R_BASE_VERSION}*
 
 ln -s /root/src/littler/examples/install.r /usr/local/bin/install.r
 ln -s /root/src/littler/examples/install2.r /usr/local/bin/install2.r
@@ -42,7 +36,8 @@ install.r docopt
 ## For the R client
 apt-get install -y curl libcurl3-openssl-dev
 install.r RJSONIO RCurl digest
-echo -e '#!/usr/bin/Rscript\nsource("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))' > /tmp/installsynapse.R
-Rscript /tmp/installsynapse.R
 
-rm /tmp/installsynapse.R
+echo -e '#!/usr/bin/Rscript\nsource("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))' > /root/src/installsynapse.R
+Rscript /root/src/installsynapse.R
+
+rm /root/src/installsynapse.R
