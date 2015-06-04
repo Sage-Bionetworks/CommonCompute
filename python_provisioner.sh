@@ -1,5 +1,7 @@
 #!/bin/bash -x
 
+pushd /root/src/
+
 apt-get update
 apt-get install -y --no-install-recommends ed less locales wget
 apt-get install -y python python3 python-dev build-essential
@@ -24,12 +26,16 @@ pip install pandas
 
 
 ## For cloudbiolinux
-apt-get remove python-fabric
+## Upgrade this first due to config file conflict
+apt-get -o Dpkg::Options::="--force-confnew" install -y cloud-init
+apt-get remove -y python-fabric
 apt-get clean all
 pip install fabric
 git clone git://github.com/chapmanb/cloudbiolinux.git
-cd cloudbiolinux
+
+pushd cloudbiolinux
 fab -f fabfile.py -H localhost install_biolinux:flavor=ngs_pipeline_minimal
+popd
 
 
 ## For Sailfish

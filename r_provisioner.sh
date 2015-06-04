@@ -1,7 +1,5 @@
 #!/bin/bash -x
 
-pip install synapseclient
-
 ## For the R client
 apt-get install -y curl libcurl3-openssl-dev
 install.r RJSONIO RCurl digest
