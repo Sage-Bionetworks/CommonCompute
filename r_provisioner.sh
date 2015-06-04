@@ -18,10 +18,10 @@ apt-get update
 
 ## For R 3.1, Ubuntu repositories only have R 2.14
 
-export R_BASE_VERSION=3.1.3-1
+export R_BASE_VERSION=3.1.3-1precise2
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
-apt-get install -y --no-install-recommends littler r-base=${R_BASE_VERSION}* r-base-dev=${R_BASE_VERSION}* r-recommended=${R_BASE_VERSION}*
+apt-get install -V -y --no-install-recommends littler r-base-core=${R_BASE_VERSION} r-base=${R_BASE_VERSION} r-base-dev=${R_BASE_VERSION} r-recommended=${R_BASE_VERSION}
 
 ln -s /usr/share/doc/littler/examples/install.r /usr/local/bin/install.r
 ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r
@@ -29,7 +29,7 @@ ln -s /usr/share/doc/littler/examples/installGithub.r /usr/local/bin/installGith
 ln -s /usr/share/doc/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
 
 ## Set a default CRAN repo
-echo 'options(repo = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
+echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
 
 ## Use the default CRAN repo with littler
 echo 'source("/etc/R/Rprofile.site")' >> /etc/littler.r
