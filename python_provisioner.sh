@@ -23,7 +23,7 @@ rm setuptools-17.1.zip
 ## Synapse Python client
 
 ## Fixes an InsecurePlatformWarning
-apt-get remove python-openssl
+apt-get -y remove python-openssl
 pip install pyopenssl==0.15.1 ndg-httpsclient pyasn1
 pip install synapseclient
 
