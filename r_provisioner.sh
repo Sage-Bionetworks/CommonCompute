@@ -12,7 +12,7 @@ export LC_ALL="en_US.UTF-8"
 
 ## Use Debian repo at CRAN, and use RStudio CDN as mirror
 ## This gets us updated r-base, r-base-dev, r-recommended and littler
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ precise/" > /etc/apt/sources.list.d/r-cran.list
 apt-get update
 
