@@ -21,7 +21,7 @@ apt-get update
 export R_BASE_VERSION=3.1.3-1trusty
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
-apt-get install -V -y --no-install-recommends littler r-base-core=${R_BASE_VERSION} r-base=${R_BASE_VERSION} r-base-dev=${R_BASE_VERSION} r-recommended=${R_BASE_VERSION}
+apt-get install -V -y littler r-base-core=${R_BASE_VERSION} r-base=${R_BASE_VERSION} r-base-dev=${R_BASE_VERSION} r-recommended=${R_BASE_VERSION}
 
 ln -s /usr/share/doc/littler/examples/install.r /usr/local/bin/install.r
 ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r
