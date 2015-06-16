@@ -12,8 +12,8 @@
             "region": "us-east-1",
             "source_ami": "ami-d05e75b8",
             "ssh_username": "ubuntu",
-            "ami_name": "ubuntu12.04-SageCommonCompute {{timestamp}}",
-            "instance_type": "m3.large"
+            "ami_name": "ubuntu14.04-SageCommonCompute {{timestamp}}",
+            "instance_type": "m3.xlarge"
         }
 
     ],
