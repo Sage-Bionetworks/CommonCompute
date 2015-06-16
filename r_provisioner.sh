@@ -13,12 +13,12 @@ export LC_ALL="en_US.UTF-8"
 ## Use Debian repo at CRAN, and use RStudio CDN as mirror
 ## This gets us updated r-base, r-base-dev, r-recommended and littler
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ precise/" > /etc/apt/sources.list.d/r-cran.list
+echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ trusty/" > /etc/apt/sources.list.d/r-cran.list
 apt-get update
 
 ## For R 3.1, Ubuntu repositories only have R 2.14
 
-export R_BASE_VERSION=3.1.3-1precise2
+export R_BASE_VERSION=3.1.3-1trusty
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
 apt-get install -V -y --no-install-recommends littler r-base-core=${R_BASE_VERSION} r-base=${R_BASE_VERSION} r-base-dev=${R_BASE_VERSION} r-recommended=${R_BASE_VERSION}
