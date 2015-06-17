@@ -27,6 +27,11 @@
             "only": ["amazon-ebs"]
         },
         {
+            "type": "file",
+            "source": "./modulefiles/",
+            "destination": "/usr/local/Modules/3.2.10/modulefiles"
+        },
+        {
             "type": "shell",
             "scripts": ["python_provisioner.sh"],
             "pause_before": "10s",
@@ -40,10 +45,13 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-	{
-	    "type": "file",
-	    "source": "./modulefiles/",
-	    "destination": "/usr/local/Modules/3.2.10/modulefiles"
-	}
+        {
+            "type": "shell",
+            "scripts": ["cloudbio_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        }
+
     ]
 }

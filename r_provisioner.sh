@@ -18,7 +18,7 @@ apt-get update
 
 ## For R 3.1, Ubuntu repositories only have R 2.14
 
-export R_BASE_VERSION=3.1.3-1trusty
+export R_BASE_VERSION=3.2.0-4trusty0
 
 # ## Now install R and littler, and create a link for littler in /usr/local/bin
 apt-get install -V -y littler r-base-core=${R_BASE_VERSION} r-base=${R_BASE_VERSION} r-base-dev=${R_BASE_VERSION} r-recommended=${R_BASE_VERSION}
@@ -40,4 +40,4 @@ install.r docopt
 apt-get install -y curl libcurl4-openssl-dev
 install.r RJSONIO RCurl digest
 
-r -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
+r -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'
