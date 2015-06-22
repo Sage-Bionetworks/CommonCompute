@@ -10,9 +10,9 @@
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "us-east-1",
-            "source_ami": "ami-d05e75b8",
-            "ssh_username": "ubuntu",
-            "ami_name": "ubuntu14.04-SageCommonCompute {{timestamp}}",
+            "source_ami": "ami-77fe0b1c",
+            "ssh_username": "ec2-user",
+            "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
             "instance_type": "m3.xlarge"
         }
 
@@ -20,16 +20,16 @@
 
     "provisioners": [
         {
+            "type": "file",
+            "source": "./modulefiles",
+            "destination": "/home/ec2-user"
+        },
+        {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
-        },
-        {
-            "type": "file",
-            "source": "./modulefiles/",
-            "destination": "/usr/local/Modules/3.2.10/modulefiles"
         },
         {
             "type": "shell",
