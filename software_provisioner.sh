@@ -3,6 +3,7 @@
 mkdir /root/src/
 cd /root/src/
 
+yum-config-manager --enable=epel
 yum makecache
 
 wget "http://downloads.sourceforge.net/project/modules/Modules/modules-3.2.10/modules-3.2.10.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fmodules%2Ffiles%2F&ts=1433366084&use_mirror=iweb" -O modules-3.2.10.tar.gz

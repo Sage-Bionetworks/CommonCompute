@@ -3,30 +3,32 @@
 mkdir /root/src/
 cd /root/src/
 
-## Use Debian repo at CRAN, and use RStudio CDN as mirror
-## This gets us updated r-base, r-base-dev, r-recommended and littler
-# apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-# echo "deb http://cran.rstudio.com/bin/linux/ubuntu/ trusty/" > /etc/apt/sources.list.d/r-cran.list
-# apt-get update
+yum install -y R-core R-core-devel R-devel
 
-yum install libXt-devel
-wget http://cran.r-project.org/src/base/R-3/R-3.2.1.tar.gz
+wget http://dirk.eddelbuettel.com/code/littler/littler-0.2.3.tar.gz
+tar xzf littler-0.2.3.tar.gz
+cd littler-0.2.3
+./bootstrap && ./configure && make && make install
 
-ln -s /usr/share/doc/littler/examples/install.r /usr/local/bin/install.r
-ln -s /usr/share/doc/littler/examples/install2.r /usr/local/bin/install2.r
-ln -s /usr/share/doc/littler/examples/installGithub.r /usr/local/bin/installGithub.r
-ln -s /usr/share/doc/littler/examples/testInstalled.r /usr/local/bin/testInstalled.r
+mkdir -p /opt/littler-0.2.3/bin/
+cp /root/src/littler-0.2.3/examples/*.r /opt/littler-0.2.3/bin/
 
+ln -s /opt/littler-0.2.3/bin/install.r /usr/local/bin/install.r
+ln -s /opt/littler-0.2.3/bin/install2.r /usr/local/bin/install2.r
+ln -s /opt/littler-0.2.3/bin/installGithub.r /usr/local/bin/installGithub.r
+ln -s /opt/littler-0.2.3/bin/testInstalled.r /usr/local/bin/testInstalled.r
+
+## Use RStudio CDN as mirror
 ## Set a default CRAN repo
-echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /etc/R/Rprofile.site
+echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /usr/lib64/R/etc/Rprofile.site
 
 ## Use the default CRAN repo with littler
-echo 'source("/etc/R/Rprofile.site")' >> /etc/littler.r
+echo 'source("/usr/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
 
-install.r docopt
+Rscript -e 'install.packages("docopt")'
 
 ## For the R client
-apt-get install -y curl libcurl4-openssl-dev
-install.r RJSONIO RCurl digest
+yum install -y curl libcurl libcurl-devel
+Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest"))'
 
-r -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'
+Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'

@@ -1,9 +1,7 @@
 ## For cloudbiolinux
-## Upgrade this first due to config file conflict
-apt-get -o Dpkg::Options::="--force-confnew" install -y cloud-init
-apt-get remove -y python-fabric
-apt-get clean all
-pip install fabric
+yum install -y cloud-init
+
+pip2.7 install fabric pyyaml
 git clone git://github.com/chapmanb/cloudbiolinux.git
 
 cd cloudbiolinux
