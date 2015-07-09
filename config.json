@@ -13,7 +13,9 @@
             "source_ami": "ami-77fe0b1c",
             "ssh_username": "ec2-user",
             "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
-            "instance_type": "m3.xlarge"
+            "instance_type": "m4.2xlarge",
+            "spot_price": "auto",
+            "spot_price_auto_product": "Linux/UNIX"
         }
 
     ],
