@@ -31,4 +31,4 @@ Rscript -e 'install.packages("docopt")'
 yum install -y curl libcurl libcurl-devel
 Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest"))'
 
-Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'
+Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'

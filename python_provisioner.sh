@@ -1,5 +1,8 @@
 #!/bin/bash -x
 
+# Need this for module loading
+source /etc/profile.d/modules.sh
+
 cd /root/src/
 
 yum makecache
@@ -17,16 +20,38 @@ mkdir /opt/Python-2.7.10/
 ./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
 cd ..
 
+ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
+
 module load python/2.7.10
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
 
 /opt/Python-2.7.10/bin/easy_install pip
 pip2.7 install --upgrade pip
 
+# Install numpy, using openblas
+cd /root/src
+pip install -d /root/src numpy
+tar xzf numpy-1.9.2.tar.gz
+cd numpy-1.9.2
+
+# # files uploaded by file provisioner
+# # configuration for openblas, which should be at /opt/OpenBLAS/
+# cp /home/ec2-user/numpy/site.cfg .
+#
+# unset CPPFLAGS
+# unset LDFLAGS
+# python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf numpy*
+
+## Need this to get the lib; should be in the python modulefile
+# export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+
 pip2.7 install cython
 pip2.7 install ipython
 pip2.7 install virtualenv
-pip2.7 install numpy
 pip2.7 install pandas
 pip2.7 install awscli
 
@@ -53,17 +78,31 @@ mkdir /opt/Python-3.4.3/
 
 cd ..
 
+ln -s /opt/Python-3.4.3/bin/python3.4 /opt/Python-3.4.3/bin/python
+
 module load python/3.4.3
+
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.4
 
 easy_install-3.4 pip
 pip3.4 install --upgrade pip
 
 pip3.4 install cython
+
+# Install numpy, using openblas
+cd /root/src
+pip install -d /root/src numpy
+tar xzf numpy-1.9.2.tar.gz
+# cd numpy-1.9.2
+#
+# unset CPPFLAGS
+# unset LDFLAGS
+# python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+python setup.py clean && python setup.py build && python setup.py install
+
 pip3.4 install ipython
 pip3.4 install virtualenv
 pip3.4 install snakemake
-pip3.4 install numpy
 pip3.4 install pandas
 pip3.4 install awscli
 
