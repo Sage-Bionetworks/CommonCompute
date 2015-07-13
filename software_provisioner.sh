@@ -1,5 +1,9 @@
 # Provisioner for software
 
+# need to globally disable some packages, they break the install
+# in /etc/yum.conf:
+# exclude=cloud-init kernel* zfs* spl* libzfs* libnvpair* libuutil* libzpool*
+
 mkdir /root/src/
 cd /root/src/
 
