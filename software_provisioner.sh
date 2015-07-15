@@ -3,6 +3,7 @@
 # need to globally disable some packages, they break the install
 # in /etc/yum.conf:
 # exclude=cloud-init,git*,ganglia*
+cp /home/ec2-user/yum/yum.conf /etc/
 
 mkdir /root/src/
 cd /root/src/
@@ -25,6 +26,8 @@ wget "https://github.com/kingsfordgroup/sailfish/releases/download/v0.6.3/Sailfi
 tar -xzf Sailfish-0.6.3-Linux_x86-64.tar.gz
 cd -
 
+# Copy pre-made module files - these were moved to the instance at the beginning
+# of the provision
 cp -R /home/ec2-user/modulefiles/* /usr/share/Modules/modulefiles/
 
 # OpenBlas

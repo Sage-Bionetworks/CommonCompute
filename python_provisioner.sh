@@ -30,6 +30,8 @@ curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Pyth
 /opt/Python-2.7.10/bin/easy_install pip
 pip2.7 install --upgrade pip
 
+pip2.7 install cython
+
 # Install numpy, using openblas
 cd /root/src
 pip install -d /root/src numpy
@@ -51,7 +53,6 @@ rm -rf numpy*
 ## Need this to get the lib; should be in the python modulefile
 # export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
-pip2.7 install cython
 pip2.7 install ipython
 pip2.7 install virtualenv
 pip2.7 install pandas
@@ -60,8 +61,8 @@ pip2.7 install awscli
 ## Synapse Python client (only for python 2)
 ## Fixes an InsecurePlatformWarning
 module unload python
-yum -y remove python-openssl
-yum -y install libffi-devel libssl-devel
+# yum -y remove pyOpenSSL
+yum -y install libffi-devel openssl-devel
 module load python/2.7.10
 
 pip2.7 install pyopenssl==0.15.1 ndg-httpsclient pyasn1
@@ -104,6 +105,9 @@ unset CPPFLAGS
 unset LDFLAGS
 python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf numpy*
 
 pip3.4 install ipython
 pip3.4 install virtualenv

@@ -25,6 +25,16 @@
             "destination": "/home/ec2-user"
         },
         {
+            "type": "file",
+            "source": "./numpy",
+            "destination": "/home/ec2-user"
+        },
+        {
+            "type": "file",
+            "source": "./yum",
+            "destination": "/home/ec2-user"
+        },
+        {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
             "pause_before": "10s",
