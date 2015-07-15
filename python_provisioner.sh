@@ -22,7 +22,9 @@ cd ..
 
 ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
 
+# Requires copying of the module file at beginning of provisioning
 module load python/2.7.10
+
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
 
 /opt/Python-2.7.10/bin/easy_install pip
@@ -36,12 +38,12 @@ cd numpy-1.9.2
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-# cp /home/ec2-user/numpy/site.cfg .
-#
-# unset CPPFLAGS
-# unset LDFLAGS
-# python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
-python setup.py clean && python setup.py build && python setup.py install
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
 rm -rf numpy*
@@ -80,6 +82,7 @@ cd ..
 
 ln -s /opt/Python-3.4.3/bin/python3.4 /opt/Python-3.4.3/bin/python
 
+# Requires copying of the module file at beginning of provisioning
 module load python/3.4.3
 
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.4
@@ -93,12 +96,14 @@ pip3.4 install cython
 cd /root/src
 pip install -d /root/src numpy
 tar xzf numpy-1.9.2.tar.gz
-# cd numpy-1.9.2
-#
-# unset CPPFLAGS
-# unset LDFLAGS
-# python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
-python setup.py clean && python setup.py build && python setup.py install
+cd numpy-1.9.2
+
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
 
 pip3.4 install ipython
 pip3.4 install virtualenv

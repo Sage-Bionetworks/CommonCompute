@@ -2,13 +2,13 @@
 
 # need to globally disable some packages, they break the install
 # in /etc/yum.conf:
-# exclude=cloud-init kernel* zfs* spl* libzfs* libnvpair* libuutil* libzpool*
+# exclude=cloud-init,git*,ganglia*
 
 mkdir /root/src/
 cd /root/src/
 
-yum-config-manager --enable epel
-yum makecache
+# Get rid of this stuff - might be removed in subsequent cfncluster releases
+yum remove -y zfs-release.noarch libnvpair1.x86_64 libuutil1.x86_64 libzfs2.x86_64 libzfs2-devel.x86_64 libzpool2.x86_64 lustre.x86_64 lustre-debuginfo.x86_64 lustre-dkms.noarch lustre-osd-ldiskfs.x86_64 lustre-osd-zfs.x86_64 lustre-source.x86_64 lustre-tests.x86_64 spl.x86_64 spl-debuginfo.x86_64 spl-dkms.noarch zfs.x86_64 zfs-debuginfo.x86_64 zfs-devel.x86_64 zfs-dkms.noarch zfs-dracut.x86_64 zfs-test.x86_64
 
 yum update -y
 
@@ -33,6 +33,13 @@ cd /root/src/OpenBlas
 wget http://github.com/xianyi/OpenBLAS/archive/v0.2.14.tar.gz
 tar xzf v0.2.14.tar.gz
 cd OpenBLAS-0.2.14/
-# make BINARY=64 FC=gfortran USE_THREAD=1 && make install
+make BINARY=64 FC=gfortran USE_THREAD=1 && make install
 
 cd /root/src
+
+# Newer version of git
+yum remove -y git
+wget https://github.com/git/git/archive/v2.4.5.tar.gz
+tar xzf v2.4.5.tar.gz
+cd git-2.4.5
+make prefix=/usr all && make prefix=/usr install

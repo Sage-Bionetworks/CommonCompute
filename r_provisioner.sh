@@ -25,7 +25,7 @@ echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /usr/lib64/R/et
 ## Use the default CRAN repo with littler
 echo 'source("/usr/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
 
-Rscript -e 'install.packages("docopt")'
+# Rscript -e 'install.packages("docopt")'
 
 ## For the R client
 yum install -y curl libcurl libcurl-devel
