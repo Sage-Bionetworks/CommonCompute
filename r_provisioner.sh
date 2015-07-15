@@ -3,7 +3,7 @@
 mkdir /root/src/
 cd /root/src/
 
-yum install -y R-core R-core-devel R-devel
+yum install --enablerepo=epel -y R-core R-core-devel R-devel
 
 wget http://dirk.eddelbuettel.com/code/littler/littler-0.2.3.tar.gz
 tar xzf littler-0.2.3.tar.gz
