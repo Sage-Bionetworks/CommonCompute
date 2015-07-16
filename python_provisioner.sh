@@ -1,41 +1,120 @@
 #!/bin/bash -x
 
-apt-get update
-apt-get install -y --no-install-recommends ed less locales wget
-apt-get install -y python python3 python-dev build-essential
+# Need this for module loading
+source /etc/profile.d/modules.sh
 
-apt-get install -y ipython
-apt-get install -y cython
+cd /root/src/
 
-## For Snakemake
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.2
-easy_install-3.2 pip
-pip3 install virtualenv
-pip3 install snakemake
+yum makecache
+yum install -y ed less wget
+yum install -y python python-devel
 
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python2.7
-easy_install-2.7 pip
-pip install virtualenv
-rm setuptools-17.0.zip
+# Install newer version of python 2
+# Will require a module file
+yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 
-## Synapse Python client
-pip install synapseclient
+wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
+tar xzf Python-2.7.10.tgz
+cd Python-2.7.10
+mkdir /opt/Python-2.7.10/
+./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+cd ..
 
-## For pandas
-pip install numpy
-pip install pandas
+ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
 
-## For cloudbiolinux
-apt-get remove -y python-fabric
-apt-get clean all
-pip install fabric
-git clone git://github.com/chapmanb/cloudbiolinux.git
-cd cloudbiolinux
-fab -f fabfile.py -H localhost install_biolinux:flavor=ngs_pipeline_minimal
+# Requires copying of the module file at beginning of provisioning
+module load python/2.7.10
 
-# AWS CLI
-pip install awscli
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
+
+/opt/Python-2.7.10/bin/easy_install pip
+pip2.7 install --upgrade pip
+
+pip2.7 install cython
+
+# Install numpy, using openblas
+cd /root/src
+pip install -d /root/src numpy
+tar xzf numpy-1.9.2.tar.gz
+cd numpy-1.9.2
+
+# # files uploaded by file provisioner
+# # configuration for openblas, which should be at /opt/OpenBLAS/
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf numpy*
+
+## Need this to get the lib; should be in the python modulefile
+# export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+
+pip2.7 install ipython
+pip2.7 install virtualenv
+pip2.7 install pandas
+pip2.7 install awscli
+
+## Synapse Python client (only for python 2)
+## Fixes an InsecurePlatformWarning
+module unload python
+# yum -y remove pyOpenSSL
+yum -y install libffi-devel openssl-devel
+module load python/2.7.10
+
+pip2.7 install pyopenssl==0.15.1 ndg-httpsclient pyasn1
+pip2.7 install synapseclient
+
+module unload python
+
+# Install python 3
+# Can use a module file
+wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
+tar xzf Python-3.4.3.tgz
+cd Python-3.4.3
+mkdir /opt/Python-3.4.3/
+./configure --prefix=/opt/Python-3.4.3/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && \
+    make && make altinstall
+
+cd ..
+
+ln -s /opt/Python-3.4.3/bin/python3.4 /opt/Python-3.4.3/bin/python
+
+# Requires copying of the module file at beginning of provisioning
+module load python/3.4.3
+
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.4
+
+easy_install-3.4 pip
+pip3.4 install --upgrade pip
+
+pip3.4 install cython
+
+# Install numpy, using openblas
+cd /root/src
+pip install -d /root/src numpy
+tar xzf numpy-1.9.2.tar.gz
+cd numpy-1.9.2
+
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf numpy*
+
+pip3.4 install ipython
+pip3.4 install virtualenv
+pip3.4 install snakemake
+pip3.4 install pandas
+pip3.4 install awscli
+
+module unload python
 
 ## Cleanup
-rm -rf /tmp/downloaded_packages/ /tmp/*.rds
-rm -rf /var/lib/apt/lists/*

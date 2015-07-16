@@ -3,25 +3,47 @@
         "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
         "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
     },
-    
+
     "builders": [
         {
             "type": "amazon-ebs",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "us-east-1",
-            "source_ami": "ami-765b3e1f",
-            "ssh_username": "ubuntu",
-            "ami_name": "ubuntu12.04-SageCommonCompute {{timestamp}}",
-            "instance_type": "m3.large"
+            "source_ami": "ami-9711c6fc",
+            "ssh_username": "ec2-user",
+            "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
+            "instance_type": "c3.4xlarge"
         }
-        
+
     ],
-    
+
     "provisioners": [
+        {
+            "type": "file",
+            "source": "./modulefiles",
+            "destination": "/home/ec2-user"
+        },
+        {
+            "type": "file",
+            "source": "./numpy",
+            "destination": "/home/ec2-user"
+        },
+        {
+            "type": "file",
+            "source": "./yum",
+            "destination": "/home/ec2-user"
+        },
         {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["jenkins_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
@@ -40,10 +62,20 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-	{
-	    "type": "file",
-	    "source": "./modulefiles/",
-	    "destination": "/usr/local/Modules/3.2.10/modulefiles"
-	}
+        {
+            "type": "shell",
+            "scripts": ["cloudbio_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "inline": ["/usr/local/sbin/ami_cleanup.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        }
+
     ]
 }
