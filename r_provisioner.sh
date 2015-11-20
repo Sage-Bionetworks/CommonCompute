@@ -27,6 +27,8 @@ echo 'source("/usr/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
 
 # Rscript -e 'install.packages("docopt")'
 
+Rscript -e 'install.packages(c("devtools", "dplyr", "tidyr", "ggplot2", "reshape2", "knitr", "stringr", "readr", "plyr", "data.table"))'
+
 ## For the R client
 yum install -y curl libcurl libcurl-devel
 Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest"))'
