@@ -35,8 +35,8 @@ pip2.7 install cython
 # Install numpy, using openblas
 cd /root/src
 pip install -d /root/src numpy
-tar xzf numpy-1.9.2.tar.gz
-cd numpy-1.9.2
+tar xzf numpy-.*.tar.gz
+cd numpy-.*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
@@ -57,6 +57,12 @@ pip2.7 install ipython
 pip2.7 install virtualenv
 pip2.7 install pandas
 pip2.7 install awscli
+pip2.7 install scipy
+pip2.7 install matplotlib
+pip2.7 install seaborn
+pip2.7 install patsy
+pip2.7 install statsmodels
+pip2.7 install scikit-learn
 
 ## Synapse Python client (only for python 2)
 ## Fixes an InsecurePlatformWarning
@@ -68,7 +74,7 @@ module load python/2.7.10
 pip2.7 install pyopenssl==0.15.1 ndg-httpsclient pyasn1
 pip2.7 install synapseclient
 
-module unload python
+module unload python/2.7.10
 
 # Install python 3
 # Can use a module file
@@ -96,8 +102,8 @@ pip3.4 install cython
 # Install numpy, using openblas
 cd /root/src
 pip install -d /root/src numpy
-tar xzf numpy-1.9.2.tar.gz
-cd numpy-1.9.2
+tar xzf numpy-*.tar.gz
+cd numpy-*
 
 cp /home/ec2-user/numpy/site.cfg .
 
@@ -114,6 +120,12 @@ pip3.4 install virtualenv
 pip3.4 install snakemake
 pip3.4 install pandas
 pip3.4 install awscli
+pip3.4 install scipy
+pip3.4 install matplotlib
+pip3.4 install seaborn
+pip3.4 install patsy
+pip3.4 install statsmodels
+pip3.4 install scikit-learn
 
 module unload python
 
