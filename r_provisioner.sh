@@ -34,3 +34,4 @@ yum install -y curl libcurl libcurl-devel
 Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest"))'
 
 Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
+Rscript -e 'source("http://www.bioconductor.org/biocLite.R") ; biocLite(c("limma", "biovizBase", "e1071"))'
