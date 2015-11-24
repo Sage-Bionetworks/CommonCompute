@@ -1,0 +1,9 @@
+ipython
+virtualenv
+pandas
+awscli
+matplotlib
+seaborn
+patsy
+statsmodels
+scikit-learn
