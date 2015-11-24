@@ -1,7 +1,6 @@
 pyopenssl==0.15.1
 ndg-httpsclient
 pyasn1
-synapseclient
 ipython
 virtualenv
 pandas
