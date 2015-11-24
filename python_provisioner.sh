@@ -78,7 +78,6 @@ yum -y install libffi-devel openssl-devel
 
 module load python/2.7.10
 pip2.7 install -r /home/ec2-user/python_requirements.txt
-pip2.7 install synapseclient
 module unload python/2.7.10
 
 # Install python 3
