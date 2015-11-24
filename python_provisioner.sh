@@ -71,8 +71,6 @@ rm -rf scipy*
 ## Need this to get the lib; should be in the python modulefile
 # export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
-pip install -r /home/ec2-user/python_requirements.txt
-
 ## Synapse Python client (only for python 2)
 ## Fixes an InsecurePlatformWarning
 module unload python
@@ -80,9 +78,8 @@ module unload python
 yum -y install libffi-devel openssl-devel
 module load python/2.7.10
 
-pip2.7 install pyopenssl==0.15.1 ndg-httpsclient pyasn1
+pip2.7 install -r /home/ec2-user/python_requirements.txt
 pip2.7 install synapseclient
-
 module unload python/2.7.10
 
 # Install python 3
@@ -142,16 +139,7 @@ python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup
 cd /root/src
 rm -rf scipy*
 
-pip3.4 install ipython
-pip3.4 install virtualenv
-pip3.4 install snakemake
-pip3.4 install pandas
-pip3.4 install awscli
-pip3.4 install matplotlib
-pip3.4 install seaborn
-pip3.4 install patsy
-pip3.4 install statsmodels
-pip3.4 install scikit-learn
+pip3.4 install -r /home/ec2-user/python_requirements.txt
 
 module unload python
 
