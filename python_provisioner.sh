@@ -34,9 +34,9 @@ pip2.7 install cython
 
 # Install numpy, using openblas
 cd /root/src
-pip install -d /root/src numpy
-tar xzf numpy-.*.tar.gz
-cd numpy-.*
+pip2.7 install -d /root/src numpy
+tar xzf numpy-*.tar.gz
+cd numpy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
@@ -48,21 +48,30 @@ python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
-rm -rf numpy*
+rm -rf numpy-*
+
+# Install scipy, using openblas
+cd /root/src
+pip2.7 install -d /root/src scipy
+tar xzf scipy-*.tar.gz
+cd scipy-*
+
+# # files uploaded by file provisioner
+# # configuration for openblas, which should be at /opt/OpenBLAS/
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf scipy*
 
 ## Need this to get the lib; should be in the python modulefile
 # export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
-pip2.7 install ipython
-pip2.7 install virtualenv
-pip2.7 install pandas
-pip2.7 install awscli
-pip2.7 install scipy
-pip2.7 install matplotlib
-pip2.7 install seaborn
-pip2.7 install patsy
-pip2.7 install statsmodels
-pip2.7 install scikit-learn
+pip install -r /home/ec2-user/python_requirements.txt
 
 ## Synapse Python client (only for python 2)
 ## Fixes an InsecurePlatformWarning
@@ -101,7 +110,7 @@ pip3.4 install cython
 
 # Install numpy, using openblas
 cd /root/src
-pip install -d /root/src numpy
+pip3.4 install -d /root/src numpy
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -115,12 +124,29 @@ python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup
 cd /root/src
 rm -rf numpy*
 
+# Install scipy, using openblas
+cd /root/src
+pip3.4 install -d /root/src scipy
+tar xzf scipy-*.tar.gz
+cd scipy-*
+
+# # files uploaded by file provisioner
+# # configuration for openblas, which should be at /opt/OpenBLAS/
+cp /home/ec2-user/numpy/site.cfg .
+
+unset CPPFLAGS
+unset LDFLAGS
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+# python setup.py clean && python setup.py build && python setup.py install
+
+cd /root/src
+rm -rf scipy*
+
 pip3.4 install ipython
 pip3.4 install virtualenv
 pip3.4 install snakemake
 pip3.4 install pandas
 pip3.4 install awscli
-pip3.4 install scipy
 pip3.4 install matplotlib
 pip3.4 install seaborn
 pip3.4 install patsy
