@@ -71,13 +71,12 @@ rm -rf scipy*
 ## Need this to get the lib; should be in the python modulefile
 # export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
-## Synapse Python client (only for python 2)
-## Fixes an InsecurePlatformWarning
+## For Synapse Python client, fixes an InsecurePlatformWarning
 module unload python
 # yum -y remove pyOpenSSL
 yum -y install libffi-devel openssl-devel
-module load python/2.7.10
 
+module load python/2.7.10
 pip2.7 install -r /home/ec2-user/python_requirements.txt
 pip2.7 install synapseclient
 module unload python/2.7.10
