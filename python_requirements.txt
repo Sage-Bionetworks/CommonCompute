@@ -1,3 +1,6 @@
+pyopenssl==0.15.1
+ndg-httpsclient
+pyasn1
 ipython
 virtualenv
 pandas
