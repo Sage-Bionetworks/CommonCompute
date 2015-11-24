@@ -11,3 +11,5 @@ seaborn
 patsy
 statsmodels
 scikit-learn
+fabric
+pyyaml
