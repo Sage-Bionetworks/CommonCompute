@@ -20,21 +20,19 @@ mkdir /opt/Python-2.7.10/
 ./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
 cd ..
 
-ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
+# ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
 
-# Requires copying of the module file at beginning of provisioning
-module load python/2.7.10
+# # Requires copying of the module file at beginning of provisioning
+# module load python/2.7.10
 
 curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
 
-/opt/Python-2.7.10/bin/easy_install pip
-pip2.7 install --upgrade pip
-
-pip2.7 install cython
+/usr/local/bin/easy_install-2.7 pip
+/usr/local/bin/pip2.7 install --upgrade pip
 
 # Install numpy, using openblas
 cd /root/src
-pip2.7 install -d /root/src numpy
+/usr/local/bin/pip2.7 install -d /root/src numpy
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -44,7 +42,7 @@ cp /home/ec2-user/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
@@ -52,7 +50,7 @@ rm -rf numpy-*
 
 # Install scipy, using openblas
 cd /root/src
-pip2.7 install -d /root/src scipy
+/usr/local/bin/pip2.7 install -d /root/src scipy
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
@@ -62,7 +60,7 @@ cp /home/ec2-user/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
@@ -72,13 +70,13 @@ rm -rf scipy*
 # export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
 ## For Synapse Python client, fixes an InsecurePlatformWarning
-module unload python
+# module unload python
 # yum -y remove pyOpenSSL
 yum -y install libffi-devel openssl-devel
 
-module load python/2.7.10
-pip2.7 install -r /home/ec2-user/python_requirements.txt
-module unload python/2.7.10
+# module load python/2.7.10
+/usr/local/bin/pip2.7 install -r /home/ec2-user/python_requirements.txt
+# module unload python/2.7.10
 
 # Install python 3
 # Can use a module file
