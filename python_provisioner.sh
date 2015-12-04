@@ -16,16 +16,17 @@ yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel r
 wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
 tar xzf Python-2.7.10.tgz
 cd Python-2.7.10
-mkdir /opt/Python-2.7.10/
-./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+# mkdir /opt/Python-2.7.10/
+# ./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
 cd ..
 
 # ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
 
 # # Requires copying of the module file at beginning of provisioning
 # module load python/2.7.10
-
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
+# curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python2.7
 
 /usr/local/bin/easy_install-2.7 pip
 /usr/local/bin/pip2.7 install --upgrade pip
@@ -48,6 +49,9 @@ unset LDFLAGS
 cd /root/src
 rm -rf numpy-*
 
+# Need this to get the lib; should be in the python modulefile
+export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+
 # Install scipy, using openblas
 cd /root/src
 /usr/local/bin/pip2.7 install -d /root/src scipy
@@ -66,9 +70,6 @@ unset LDFLAGS
 cd /root/src
 rm -rf scipy*
 
-## Need this to get the lib; should be in the python modulefile
-# export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
-
 ## For Synapse Python client, fixes an InsecurePlatformWarning
 # module unload python
 # yum -y remove pyOpenSSL
@@ -83,27 +84,23 @@ yum -y install libffi-devel openssl-devel
 wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
 tar xzf Python-3.4.3.tgz
 cd Python-3.4.3
-mkdir /opt/Python-3.4.3/
-./configure --prefix=/opt/Python-3.4.3/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && \
-    make && make altinstall
+./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
 
 cd ..
 
-ln -s /opt/Python-3.4.3/bin/python3.4 /opt/Python-3.4.3/bin/python
+# # Requires copying of the module file at beginning of provisioning
+# module load python/3.4.3
 
-# Requires copying of the module file at beginning of provisioning
-module load python/3.4.3
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python3.4
 
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.4
+/usr/local/bin/easy_install-3.4 pip
+/usr/local/bin/pip3.4 install --upgrade pip
 
-easy_install-3.4 pip
-pip3.4 install --upgrade pip
-
-pip3.4 install cython
+/usr/local/bin/pip3.4 install cython
 
 # Install numpy, using openblas
 cd /root/src
-pip3.4 install -d /root/src numpy
+/usr/local/bin/pip3.4 install -d /root/src numpy
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -111,15 +108,14 @@ cp /home/ec2-user/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
-# python setup.py clean && python setup.py build && python setup.py install
+/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
 
 cd /root/src
 rm -rf numpy*
 
 # Install scipy, using openblas
 cd /root/src
-pip3.4 install -d /root/src scipy
+/usr/local/bin/pip3.4 install -d /root/src scipy
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
@@ -129,7 +125,7 @@ cp /home/ec2-user/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
+/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
