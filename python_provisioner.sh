@@ -8,6 +8,9 @@ cd /root/src/
 yum makecache
 yum install -y ed less wget
 yum install -y python python-devel
+yum install -y openjpeg openjpeg-devel openjpeg-libs libjpeg-turbo libjpeg-turbo-devel
+yum install -y mesa-private-llvm mesa-private-llvm-devel
+yum install -y libxml2 libxml2-devel libxslt libxslt-devel
 
 # Install newer version of python 2
 # Will require a module file
