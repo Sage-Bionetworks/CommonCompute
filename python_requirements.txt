@@ -9,7 +9,6 @@ matplotlib
 seaborn
 patsy
 statsmodels
-scikit-learn
 fabric
 cython
 beautifulsoup4
@@ -18,16 +17,17 @@ Flask
 HTSeq
 Jinja2
 MarkupSafe
-PIL
+# PIL
+Pillow
 PyVCF
+# Pymacs
 PyYAML
 Pygments
-Pymacs
 Sphinx
 Werkzeug
 astroid
 awsebcli
-basemap
+# basemap
 bcdoc
 biopython
 blessed
@@ -58,7 +58,7 @@ itsdangerous
 jmespath
 jsonschema
 lifelines
-llvmpy
+# llvmpy
 logilab-astng
 logilab-common
 lxml
@@ -71,7 +71,7 @@ mpld3
 networkx
 nose
 numexpr
-optcomplete
+# optcomplete
 paramiko
 pathspec
 pep8
@@ -80,7 +80,7 @@ psutil
 pycrypto
 pyflakes
 pylint
-pymvpa
+# pymvpa
 pyparsing
 pyquery
 pysftp
@@ -106,15 +106,15 @@ texttable
 ipykernel
 tornado
 unotools
-vboxapi
+# vboxapi
 virtualenv-clone
 virtualenv
 virtualenvwrapper
 wcwidth
 websocket-client
 workerpool
-wxPython-common
-wxPython
+# wxPython-common
+# wxPython
 xlrd
 xmltodict
 jupyter
