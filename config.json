@@ -40,6 +40,11 @@
             "destination": "/home/ec2-user/"
         },
         {
+            "type": "file",
+            "source": "./python3_requirements.txt",
+            "destination": "/home/ec2-user/"
+        },
+        {
             "type": "shell",
             "scripts": ["user_provisioner.sh"],
             "pause_before": "10s",
