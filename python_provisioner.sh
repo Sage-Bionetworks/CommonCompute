@@ -131,11 +131,8 @@ unset LDFLAGS
 /usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
-cd /root/src
-rm -rf scipy*
+pip3.4 install -r /home/ec2-user/python3_requirements.txt
 
-pip3.4 install -r /home/ec2-user/python_requirements.txt
-
-module unload python
+# module unload python
 
 ## Cleanup
