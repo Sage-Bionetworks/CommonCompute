@@ -71,7 +71,7 @@ mpld3
 networkx
 nose
 numexpr
-# optcomplete
+argcomplete
 paramiko
 pathspec
 pep8
@@ -80,7 +80,6 @@ psutil
 pycrypto
 pyflakes
 pylint
-# pymvpa
 pyparsing
 pyquery
 pysftp
@@ -106,15 +105,12 @@ texttable
 ipykernel
 tornado
 unotools
-# vboxapi
 virtualenv-clone
 virtualenv
 virtualenvwrapper
 wcwidth
 websocket-client
 workerpool
-# wxPython-common
-# wxPython
 xlrd
 xmltodict
 jupyter
