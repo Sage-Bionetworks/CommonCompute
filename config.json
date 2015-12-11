@@ -81,13 +81,6 @@
         },
         {
             "type": "shell",
-            "scripts": ["cloudbio_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
-        },
-        {
-            "type": "shell",
             "inline": ["/usr/local/sbin/ami_cleanup.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
