@@ -37,7 +37,7 @@
         {
             "type": "file",
             "source": "./python_requirements.txt",
-            "destination": "/home/ec2-user"
+            "destination": "/home/ec2-user/"
         },
         {
             "type": "shell",
