@@ -82,56 +82,56 @@ yum -y install libffi-devel openssl-devel
 /usr/local/bin/pip2.7 install -r /home/ec2-user/python_requirements.txt
 # module unload python/2.7.10
 
-# Install python 3
-# Can use a module file
-wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
-tar xzf Python-3.4.3.tgz
-cd Python-3.4.3
-./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+# # Install python 3
+# # Can use a module file
+# wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
+# tar xzf Python-3.4.3.tgz
+# cd Python-3.4.3
+# ./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
 
-cd ..
+# cd ..
 
-# # Requires copying of the module file at beginning of provisioning
-# module load python/3.4.3
+# # # Requires copying of the module file at beginning of provisioning
+# # module load python/3.4.3
 
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python3.4
+# curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python3.4
 
-/usr/local/bin/easy_install-3.4 pip
-/usr/local/bin/pip3.4 install --upgrade pip
+# /usr/local/bin/easy_install-3.4 pip
+# /usr/local/bin/pip3.4 install --upgrade pip
 
-/usr/local/bin/pip3.4 install cython
+# /usr/local/bin/pip3.4 install cython
 
-# Install numpy, using openblas
-cd /root/src
-/usr/local/bin/pip3.4 install -d /root/src numpy
-tar xzf numpy-*.tar.gz
-cd numpy-*
+# # Install numpy, using openblas
+# cd /root/src
+# /usr/local/bin/pip3.4 install -d /root/src numpy
+# tar xzf numpy-*.tar.gz
+# cd numpy-*
 
-cp /home/ec2-user/numpy/site.cfg .
+# cp /home/ec2-user/numpy/site.cfg .
 
-unset CPPFLAGS
-unset LDFLAGS
-/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
+# unset CPPFLAGS
+# unset LDFLAGS
+# /usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
 
-cd /root/src
-rm -rf numpy*
+# cd /root/src
+# rm -rf numpy*
 
-# Install scipy, using openblas
-cd /root/src
-/usr/local/bin/pip3.4 install -d /root/src scipy
-tar xzf scipy-*.tar.gz
-cd scipy-*
+# # Install scipy, using openblas
+# cd /root/src
+# /usr/local/bin/pip3.4 install -d /root/src scipy
+# tar xzf scipy-*.tar.gz
+# cd scipy-*
 
-# # files uploaded by file provisioner
-# # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+# # # files uploaded by file provisioner
+# # # configuration for openblas, which should be at /opt/OpenBLAS/
+# cp /home/ec2-user/numpy/site.cfg .
 
-unset CPPFLAGS
-unset LDFLAGS
-/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
-# python setup.py clean && python setup.py build && python setup.py install
+# unset CPPFLAGS
+# unset LDFLAGS
+# /usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
+# # python setup.py clean && python setup.py build && python setup.py install
 
-pip3.4 install -r /home/ec2-user/python3_requirements.txt
+# pip3.4 install -r /home/ec2-user/python3_requirements.txt
 
 # module unload python
 
