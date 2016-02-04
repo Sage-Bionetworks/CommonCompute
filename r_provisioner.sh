@@ -29,14 +29,16 @@ echo 'source("/usr/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
 
 ## For the R client
 yum install -y curl libcurl libcurl-devel
-Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest", "parallel", "snow", "MRCE", "vbsr", "Rcpp", "Rcppeigen", "Rclusterpp", "dplyr", "plyr", "data.table", "tools", "RColorBrewer", "ggplot2", "gplots", "ctv", "psych", "reshape2", "vcd", "erer", "fpc", "knitr", "stringr", "igraph"))'
+Rscript -e 'install.packages(c("RJSONIO", "RCurl", "digest", "parallel", "snow", "MRCE", "vbsr", "Rcpp", "RcppEigen", "Rclusterpp", "dplyr", "plyr", "data.table", "tools", "RColorBrewer", "ggplot2", "gplots", "ctv", "psych", "reshape2", "vcd", "erer", "fpc", "knitr", "stringr", "igraph", "tidyr"))'
  
-Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
+Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'
 
 Rscript -e 'source("http://bioconductor.org/biocLite.R") ; biocLite(pkgs=c("RDAVIDWebService", "topGO", "goseq", "GO.db", "GSVA", "org.Hs.eg.db", "edgeR", "limma", "CePa", "Biobase", "pracma", "annotate", "AnnotationDbi", "BiocInstaller", "biomaRt", "Biostrings", "edgeR", "GEOquery", "GOstats", "graph", 
 "GSEABase", "impute", "preprocessCore", "GO.db"))'
 
-Rscript -e 'install.packages(c("WGCNA"))'
+Rscript -e 'install.packages(c("WGCNA", "idr"))'
+
+Rscript -e 'install.packages("devtools"); require(devtools); install_github("brian-bot/rGithubClient@dev")'
 
 # Install Rstudio server
 wget https://download2.rstudio.org/rstudio-server-rhel-0.99.467-x86_64.rpm
