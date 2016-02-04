@@ -9,11 +9,11 @@
             "type": "amazon-ebs",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
-            "region": "us-east-1",
-            "source_ami": "ami-f1dd7e9a",
+            "region": "us-west-2",
+            "source_ami": "ami-f35e56c3",
             "ssh_username": "ec2-user",
             "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
-            "instance_type": "c3.4xlarge"
+            "instance_type": "t2.large"
         }
 
     ],
@@ -35,6 +35,16 @@
             "destination": "/home/ec2-user"
         },
         {
+            "type": "file",
+            "source": "./python_requirements.txt",
+            "destination": "/home/ec2-user/"
+        },
+        {
+            "type": "file",
+            "source": "./python3_requirements.txt",
+            "destination": "/home/ec2-user/"
+        },
+        {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
             "pause_before": "10s",
@@ -48,7 +58,7 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-        {
+	{
             "type": "shell",
             "scripts": ["r_provisioner.sh"],
             "pause_before": "10s",
