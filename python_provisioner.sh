@@ -33,6 +33,7 @@ curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/loca
 
 /usr/local/bin/easy_install-2.7 pip
 /usr/local/bin/pip2.7 install --upgrade pip
+pip install --upgrade pip
 
 # Install numpy, using openblas
 cd /root/src

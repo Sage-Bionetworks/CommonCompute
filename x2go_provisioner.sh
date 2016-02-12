@@ -17,5 +17,5 @@ yum -y groupinstall "General Purpose Desktop"
 yum -y groupinstall "Office Suite and Productivity"
 yum -y groupinstall "Graphics Creation Tools"
 
-# Finally, if you wanted to add the K Desktop Environment (KDE).
+# Finally, if you want to add the K Desktop Environment (KDE).
 yum -y groupinstall kde-desktop
