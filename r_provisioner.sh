@@ -3,8 +3,19 @@
 mkdir /root/src/
 cd /root/src/
 
-yum install --enablerepo=epel -y R-core R-core-devel R-devel
+## Install R from epel repo
+#yum install --enablerepo=epel -y R-core R-core-devel R-devel
 
+# Install X11 headers for R
+yum install libXt-devel libX11-devel 
+
+## Install R from source code
+wget https://cran.r-project.org/src/base/R-3/R-3.2.3.tar.gz
+tar xzf R-3.2.3.tar.gz
+cd R-3.2.3
+./configure && make && make install
+
+## Install littler
 wget http://dirk.eddelbuettel.com/code/littler/littler-0.2.3.tar.gz
 tar xzf littler-0.2.3.tar.gz
 cd littler-0.2.3
@@ -25,26 +36,19 @@ echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /usr/lib64/R/et
 ## Use the default CRAN repo with littler
 echo 'source("/usr/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
 
-# Rscript -e 'install.packages("docopt")'
-
-Rscript -e 'install.packages(c("devtools", "dplyr", "tidyr", "ggplot2", "reshape2", "knitr", "stringr", "readr", "plyr", "data.table"))'
-
-## For the R client
+## Install additional packages for R
 yum install -y curl libcurl libcurl-devel
-Rscript -e 'install.packages(c("RJSONIO", "Rmpi", "RCurl", "digest", "parallel", "snow", "MRCE", "vbsr", "Rcpp", "RcppEigen", "Rclusterpp", "dplyr", "plyr", "data.table", "tools", "RColorBrewer", "ggplot2", "gplots", "ctv", "psych", "reshape2", "vcd", "erer", "fpc", "knitr", "stringr", "igraph", "tidyr"))'
+Rscript -e 'install.packages(c("docopt","devtools", "dplyr", "tidyr", "ggplot2", "reshape2", "knitr", "stringr", "readr", "plyr", "data.table", "RJSONIO", "rJava", "RCurl", "digest", "parallel", "snow", "MRCE", "vbsr", "Rcpp", "RcppEigen", "Rclusterpp", "dplyr", "plyr", "data.table", "tools", "RColorBrewer", "ggplot2", "gplots", "ctv", "psych", "reshape2", "vcd", "erer", "fpc", "knitr", "stringr", "igraph", "tidyr"))'
  
-Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"), stack="staging")'
+## Install synapse R client
+Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
 
+## Install additional packages from Bioconductor
 Rscript -e 'source("http://bioconductor.org/biocLite.R") ; biocLite(pkgs=c("RDAVIDWebService", "topGO", "goseq", "GO.db", "GSVA", "org.Hs.eg.db", "edgeR", "limma", "CePa", "Biobase", "pracma", "annotate", "AnnotationDbi", "BiocInstaller", "biomaRt", "Biostrings", "edgeR", "GEOquery", "GOstats", "graph", 
 "GSEABase", "impute", "preprocessCore", "GO.db", "ComplexHeatmap", "FDb.InfiniumMethylation.hg19"))'
 
+## Dependent R packages (install after installing bioc packages)
 Rscript -e 'install.packages(c("WGCNA", "idr"))'
 
+## rGithub client
 Rscript -e 'install.packages("devtools"); require(devtools); install_github("brian-bot/rGithubClient@dev")'
-
-# Install Rstudio server
-wget https://download2.rstudio.org/rstudio-server-rhel-0.99.467-x86_64.rpm
-yum install --nogpgcheck rstudio-server-rhel-0.99.467-x86_64.rpm
-
-Rscript -e 'source("http://depot.sagebase.org/CRAN.R") ; pkgInstall(c("synapseClient"))'
-Rscript -e 'source("http://www.bioconductor.org/biocLite.R") ; biocLite(c("limma", "biovizBase", "e1071"))'
