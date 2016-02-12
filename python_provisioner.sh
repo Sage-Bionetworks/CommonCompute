@@ -84,6 +84,7 @@ yum -y install libffi-devel openssl-devel
 
 # Install python 3
 # Can use a module file
+
 wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
 tar xzf Python-3.4.3.tgz
 cd Python-3.4.3
