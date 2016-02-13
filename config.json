@@ -45,6 +45,11 @@
             "destination": "/home/ec2-user/"
         },
         {
+            "type": "file",
+            "source": "./rserver.conf",
+            "destination": "/home/ec2-user/"
+        },
+        {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
             "pause_before": "10s",
@@ -68,6 +73,13 @@
 	{
             "type": "shell",
             "scripts": ["x2go_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
+            "type": "shell",
+            "scripts": ["rstudio_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
