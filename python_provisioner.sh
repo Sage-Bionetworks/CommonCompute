@@ -3,6 +3,10 @@
 # Need this for module loading
 source /etc/profile.d/modules.sh
 
+# Needed for path to R when installing rpy
+# This is set for users except for root
+export PATH=$PATH:/usr/local/bin
+
 cd /root/src/
 
 yum makecache
@@ -42,7 +46,7 @@ cd numpy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
@@ -63,7 +67,7 @@ cd scipy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
@@ -79,7 +83,7 @@ rm -rf scipy*
 yum -y install libffi-devel openssl-devel
 
 # module load python/2.7.10
-/usr/local/bin/pip2.7 install -r /home/ec2-user/python_requirements.txt
+/usr/local/bin/pip2.7 install -r /home/centos/python_requirements.txt
 # module unload python/2.7.10
 
 # # Install python 3
@@ -107,7 +111,7 @@ yum -y install libffi-devel openssl-devel
 # tar xzf numpy-*.tar.gz
 # cd numpy-*
 
-# cp /home/ec2-user/numpy/site.cfg .
+# cp /home/centos/numpy/site.cfg .
 
 # unset CPPFLAGS
 # unset LDFLAGS
@@ -124,14 +128,14 @@ yum -y install libffi-devel openssl-devel
 
 # # # files uploaded by file provisioner
 # # # configuration for openblas, which should be at /opt/OpenBLAS/
-# cp /home/ec2-user/numpy/site.cfg .
+# cp /home/centos/numpy/site.cfg .
 
 # unset CPPFLAGS
 # unset LDFLAGS
 # /usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
 # # python setup.py clean && python setup.py build && python setup.py install
 
-# pip3.4 install -r /home/ec2-user/python3_requirements.txt
+# pip3.4 install -r /home/centos/python3_requirements.txt
 
 # module unload python
 
