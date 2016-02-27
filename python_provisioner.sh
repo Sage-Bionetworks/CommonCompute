@@ -3,7 +3,7 @@
 # Need this for module loading
 source /etc/profile.d/modules.sh
 
-cd /root/src/
+cd /home/centos/src/
 
 yum makecache
 yum install -y ed less wget
@@ -16,6 +16,7 @@ yum install -y libxml2 libxml2-devel libxslt libxslt-devel
 # Will require a module file
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 
+<<<<<<< HEAD
 wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
 tar xzf Python-2.7.10.tgz
 cd Python-2.7.10
@@ -38,40 +39,66 @@ pip install --upgrade pip
 # Install numpy, using openblas
 cd /root/src
 /usr/local/bin/pip2.7 install -d /root/src numpy
+=======
+wget https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz
+tar xzf Python-2.7.11.tgz
+cd Python-2.7.11
+mkdir /opt/Python-2.7.11/
+./configure --prefix=/opt/Python-2.7.11/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall && make clean
+cd ..
+
+ln -s /opt/Python-2.7.11/bin/python2.7 /opt/Python-2.7.11/bin/python
+
+# Copy pre-made module files - these were moved to the instance at the beginning
+# of the provision
+cp -R /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
+
+# Requires copying of the module file at beginning of provisioning
+module load python/2.7.11
+
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.11/bin/python2.7
+
+easy_install pip
+pip2.7 install --upgrade pip
+
+pip2.7 install cython
+
+# Install numpy, using openblas
+cd /home/centos/src
+pip2.7 install -d /home/centos/src numpy
+>>>>>>> fromSageBio
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
-# python setup.py clean && python setup.py build && python setup.py install
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
 
-cd /root/src
+cd /home/centos/src
 rm -rf numpy-*
 
 # Need this to get the lib; should be in the python modulefile
 export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
 # Install scipy, using openblas
-cd /root/src
-/usr/local/bin/pip2.7 install -d /root/src scipy
+cd /home/centos/src
+pip2.7 install -d /home/centos/src scipy
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
-# python setup.py clean && python setup.py build && python setup.py install
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
 
-cd /root/src
+cd /home/centos/src
 rm -rf scipy*
 
 ## For Synapse Python client, fixes an InsecurePlatformWarning
@@ -79,61 +106,66 @@ rm -rf scipy*
 # yum -y remove pyOpenSSL
 yum -y install libffi-devel openssl-devel
 
-# module load python/2.7.10
-/usr/local/bin/pip2.7 install -r /home/ec2-user/python_requirements.txt
-# module unload python/2.7.10
+module load python/2.7.11
+pip3.5 install -r /home/centos/python_requirements.txt
+module unload python/2.7.11
 
 # Install python 3
 # Can use a module file
-
-wget https://www.python.org/ftp/python/3.4.3/Python-3.4.3.tgz
-tar xzf Python-3.4.3.tgz
-cd Python-3.4.3
-./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
+tar xzf Python-3.5.1.tgz
+cd Python-3.5.1
+mkdir /opt/Python-3.5.1/
+./configure --prefix=/opt/Python-3.5.1/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && \
+    make && make altinstall
 
 cd ..
 
-# # Requires copying of the module file at beginning of provisioning
-# module load python/3.4.3
+ln -s /opt/Python-3.5.1/bin/python3.5 /opt/Python-3.5.1/bin/python
 
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python3.4
+# Requires copying of the module file at beginning of provisioning
+module load python/3.5.1
 
-/usr/local/bin/easy_install-3.4 pip
-/usr/local/bin/pip3.4 install --upgrade pip
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python3.5
 
-/usr/local/bin/pip3.4 install cython
+easy_install-3.5 pip
+pip3.5 install --upgrade pip
+
+pip3.5 install cython
 
 # Install numpy, using openblas
-cd /root/src
-/usr/local/bin/pip3.4 install -d /root/src numpy
+cd /home/centos/src
+pip3.5 install -d /home/centos/src numpy
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
 
-cd /root/src
+cd /home/centos/src
 rm -rf numpy*
 
 # Install scipy, using openblas
-cd /root/src
-/usr/local/bin/pip3.4 install -d /root/src scipy
+cd /home/centos/src
+pip3.5 install -d /home/centos/src scipy
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
 # # files uploaded by file provisioner
 # # configuration for openblas, which should be at /opt/OpenBLAS/
-cp /home/ec2-user/numpy/site.cfg .
+cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python3.4 setup.py clean && /usr/local/bin/python3.4 setup.py build --fcompiler=gnu95 && /usr/local/bin/python3.4 setup.py install
-# python setup.py clean && python setup.py build && python setup.py install
+python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup.py install
 
-pip3.4 install -r /home/ec2-user/python3_requirements.txt
+cd /home/centos/src
+rm -rf scipy*
+
+pip3.5 install -r /home/centos/python_requirements.txt
 
 # module unload python
 
