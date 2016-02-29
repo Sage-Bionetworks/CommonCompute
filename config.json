@@ -74,9 +74,21 @@
             "source": "./bcbio.sh",
             "destination": "/home/centos/bcbio.sh"
         },
+	{
+            "type": "file",
+            "source": "./rserver.conf",
+            "destination": "/home/centos/rserver.conf"
+        },
         {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
+            "type": "shell",
+            "scripts": ["user_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
@@ -98,6 +110,20 @@
 	{
             "type": "shell",
             "scripts": ["jenkins_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
+            "type": "shell",
+            "scripts": ["rstudio_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
+            "type": "shell",
+            "scripts": ["x2go_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]

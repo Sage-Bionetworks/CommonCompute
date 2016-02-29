@@ -1,11 +1,11 @@
 #!/bin/bash -x
 
 # Update centos
-yum update
+yum -y update
 
 # Install x2goserver and sessions
-yum install --enablerepo=epel x2goserver
-yum install --enablerepo=epel x2goserver-xsession
+yum -y install --enablerepo=epel x2goserver
+yum -y install --enablerepo=epel x2goserver-xsession
 
 # Install GNOME desktop components
 yum -y groupinstall "Desktop" "Desktop Platform" "X Window System" "Fonts"
