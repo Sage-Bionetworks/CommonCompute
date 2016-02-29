@@ -46,6 +46,16 @@
         },
         {
             "type": "file",
+            "source": "./Rprofile.site",
+            "destination": "/home/centos/Rprofile.site"
+        },
+	{
+            "type": "file",
+            "source": "./little.r",
+            "destination": "/home/centos/little.r"
+        },
+	{
+            "type": "file",
             "source": "./python_requirements.txt",
             "destination": "/home/centos/python_requirements.txt"
         },

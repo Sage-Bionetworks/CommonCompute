@@ -4,7 +4,7 @@ mkdir /home/centos/src/
 cd /home/centos/src/
 
 export PATH=$PATH:/usr/local/bin
-export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:/usr/lib64/openmpi/lib:$LD_LIBRARY_PATH
 
 ## Install R from source
 yum -y install libpng-devel libjpeg-devel libtiff-devel ghostscript-devel curl libcurl libcurl-devel
@@ -36,10 +36,10 @@ cp /home/centos/src/littler-0.2.3/examples/*.r /opt/littler-0.2.3/bin/
 
 ## Use RStudio CDN as mirror
 ## Set a default CRAN repo
-echo 'options(repos = list(CRAN="http://cran.rstudio.com/"))' >> /usr/local/lib64/R/etc/Rprofile.site
+cp /home/centos/Rprofile.site /usr/local/lib64/R/etc/Rprofile.site
 
 ## Use the default CRAN repo with littler
-echo 'source("/usr/loacal/lib64/R/etc/Rprofile.site")' >> /etc/littler.r
+cp /home/centos/little.r /etc/littler.r
 
 ## Install R packages
 Rscript -e 'install.packages(c("docopt", "devtools", "dplyr", "tidyr", "ggplot2", "reshape2", "knitr", "stringr", "readr", "plyr", "data.table", "rJava", "doParallel", "snow", "igraph", "Rcpp", "RcppEigen", "Rclusterpp", "RColorBrewer"))'
