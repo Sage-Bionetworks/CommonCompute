@@ -3,6 +3,9 @@
 mkdir /home/centos/src/
 cd /home/centos/src/
 
+export PATH=$PATH:/usr/local/bin
+export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
+
 ## Install R from source
 yum -y install libpng-devel libjpeg-devel libtiff-devel ghostscript-devel curl libcurl libcurl-devel
 #yum install --enablerepo=epel -y R-core R-core-devel R-devel
@@ -12,7 +15,7 @@ cd R-3.2.3
 ./configure --with-x=yes --enable-R-shlib --enable-BLAS-shlib --enable-R-profiling --enable-memory-profiling JAVA_HOME=/usr/lib/jvm/java-openjdk --with-cairo=yes
 make && make install && make clean
 
-# Link openblas library
+# Link openblas library for R blas
 mv /usr/local/lib64/R/lib/libRblas.so /usr/local/lib64/R/lib/libRblas.so.keep
 ln -s /opt/OpenBLAS/lib/libopenblas.so /usr/local/lib64/R/lib/libRblas.so
 
@@ -26,10 +29,10 @@ cd littler-0.2.3
 mkdir -p /opt/littler-0.2.3/bin/
 cp /home/centos/src/littler-0.2.3/examples/*.r /opt/littler-0.2.3/bin/
 
-ln -s /opt/littler-0.2.3/bin/install.r /usr/local/bin/install.r
-ln -s /opt/littler-0.2.3/bin/install2.r /usr/local/bin/install2.r
-ln -s /opt/littler-0.2.3/bin/installGithub.r /usr/local/bin/installGithub.r
-ln -s /opt/littler-0.2.3/bin/testInstalled.r /usr/local/bin/testInstalled.r
+# ln -s /opt/littler-0.2.3/bin/install.r /usr/local/bin/install.r
+# ln -s /opt/littler-0.2.3/bin/install2.r /usr/local/bin/install2.r
+# ln -s /opt/littler-0.2.3/bin/installGithub.r /usr/local/bin/installGithub.r
+# ln -s /opt/littler-0.2.3/bin/testInstalled.r /usr/local/bin/testInstalled.r
 
 ## Use RStudio CDN as mirror
 ## Set a default CRAN repo
@@ -54,5 +57,4 @@ Rscript -e 'source("http://www.bioconductor.org/biocLite.R") ; biocLite(c("limma
 Rscript -e 'library(devtools); install_github("brian-bot/githubr")'
 
 ## Install Rmpi
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib
 Rscript -e 'install.packages("Rmpi", configure.args = c("--with-Rmpi-include=/usr/include/openmpi-x86_64","--with-Rmpi-libpath=/usr/lib64/openmpi/lib","--with-Rmpi-type=OPENMPI"))'

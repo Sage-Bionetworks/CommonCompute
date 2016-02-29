@@ -5,6 +5,10 @@ source /etc/profile.d/modules.sh
 
 cd /home/centos/src/
 
+# Needed for path to R when installing rpy
+# This is set for users except for root
+export PATH=$PATH:/usr/local/bin
+
 yum makecache
 yum install -y ed less wget
 yum install -y python python-devel
@@ -16,30 +20,6 @@ yum install -y libxml2 libxml2-devel libxslt libxslt-devel
 # Will require a module file
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 
-<<<<<<< HEAD
-wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
-tar xzf Python-2.7.10.tgz
-cd Python-2.7.10
-# mkdir /opt/Python-2.7.10/
-# ./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
-./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
-cd ..
-
-# ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
-
-# # Requires copying of the module file at beginning of provisioning
-# module load python/2.7.10
-# curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python2.7
-
-/usr/local/bin/easy_install-2.7 pip
-/usr/local/bin/pip2.7 install --upgrade pip
-pip install --upgrade pip
-
-# Install numpy, using openblas
-cd /root/src
-/usr/local/bin/pip2.7 install -d /root/src numpy
-=======
 wget https://www.python.org/ftp/python/2.7.11/Python-2.7.11.tgz
 tar xzf Python-2.7.11.tgz
 cd Python-2.7.11
@@ -66,7 +46,6 @@ pip2.7 install cython
 # Install numpy, using openblas
 cd /home/centos/src
 pip2.7 install -d /home/centos/src numpy
->>>>>>> fromSageBio
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -119,8 +98,6 @@ mkdir /opt/Python-3.5.1/
 ./configure --prefix=/opt/Python-3.5.1/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && \
     make && make altinstall
 
-cd ..
-
 ln -s /opt/Python-3.5.1/bin/python3.5 /opt/Python-3.5.1/bin/python
 
 # Requires copying of the module file at beginning of provisioning
@@ -167,6 +144,4 @@ rm -rf scipy*
 
 pip3.5 install -r /home/centos/python_requirements.txt
 
-# module unload python
-
-## Cleanup
+module unload python

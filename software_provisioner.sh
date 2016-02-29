@@ -1,3 +1,5 @@
+#!/bin/bash -x
+
 # Provisioner for software
 
 # need to globally disable some packages, they break the install
@@ -8,7 +10,9 @@ cp /home/centos/yum/yum.conf /etc/
 mkdir /home/centos/src/
 cd /home/centos/src/
 
+yum remove -y R-core R-core-devel R-java R-java-devel
 yum update -y
+yum install -y curl libcurl libcurl-devel readline readline-devel readline-static
 
 wget "http://downloads.sourceforge.net/project/modules/Modules/modules-3.2.10/modules-3.2.10.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fmodules%2Ffiles%2F&ts=1433366084&use_mirror=iweb" -O modules-3.2.10.tar.gz
 tar xzf modules-3.2.10.tar.gz
