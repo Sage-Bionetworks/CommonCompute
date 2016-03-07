@@ -10,8 +10,8 @@
 	    "ssh_pty" : "true",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
-            "region": "us-east-1",
-            "source_ami": "ami-d77343bd",
+            "region": "us-west-2",
+            "source_ami": "ami-5447a434",
             "ssh_username": "centos",
             "ami_name": "CentOS 7.2 - SageCommonCompute {{timestamp}}",
             "instance_type": "c4.xlarge",
@@ -44,6 +44,12 @@
             "source": "./yum",
             "destination": "/home/centos"
         },
+	{
+            "type": "file",
+            "source": "./synapseConfig",
+            "destination": "/home/centos/synapseConfig"
+        },
+
         {
             "type": "file",
             "source": "./Rprofile.site",
@@ -80,6 +86,11 @@
             "destination": "/home/centos/rserver.conf"
         },
         {
+            "type": "file",
+            "source": "./openmpi.sh",
+            "destination": "/home/centos/openmpi.sh"
+        },
+        {
             "type": "shell",
             "scripts": ["software_provisioner.sh"],
             "pause_before": "10s",
@@ -93,7 +104,7 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-        {
+	{
             "type": "shell",
             "scripts": ["r_provisioner.sh"],
             "pause_before": "10s",
@@ -101,20 +112,6 @@
             "only": ["amazon-ebs"]
         },
         {
-            "type": "shell",
-            "scripts": ["python_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
-        },
-	{
-            "type": "shell",
-            "scripts": ["jenkins_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
-        },
-	{
             "type": "shell",
             "scripts": ["rstudio_provisioner.sh"],
             "pause_before": "10s",
@@ -128,7 +125,14 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-        {
+	{
+            "type": "shell",
+            "scripts": ["jenkins_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
             "type": "shell",
             "scripts": ["finishup_provisioner.sh"],
             "pause_before": "10s",
