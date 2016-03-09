@@ -31,7 +31,7 @@ ln -s /opt/Python-2.7.11/bin/python2.7 /opt/Python-2.7.11/bin/python
 
 # Copy pre-made module files - these were moved to the instance at the beginning
 # of the provision
-cp -R /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
+cp -Rf /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
 
 # Requires copying of the module file at beginning of provisioning
 module load python/2.7.11
@@ -85,10 +85,6 @@ rm -rf scipy*
 # yum -y remove pyOpenSSL
 yum -y install libffi-devel openssl-devel
 
-module load python/2.7.11
-pip3.5 install -r /home/centos/python_requirements.txt
-module unload python/2.7.11
-
 # Install python 3
 # Can use a module file
 wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
@@ -141,7 +137,3 @@ python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup
 
 cd /home/centos/src
 rm -rf scipy*
-
-pip3.5 install -r /home/centos/python_requirements.txt
-
-module unload python

@@ -60,16 +60,6 @@
             "source": "./little.r",
             "destination": "/home/centos/little.r"
         },
-	{
-            "type": "file",
-            "source": "./python_requirements.txt",
-            "destination": "/home/centos/python_requirements.txt"
-        },
-        {
-            "type": "file",
-            "source": "./python3_requirements.txt",
-            "destination": "/home/centos/python3_requirements.txt"
-        },
         {
             "type": "file",
             "source": "./openblas.sh",
@@ -111,23 +101,9 @@
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         },
-        {
-            "type": "shell",
-            "scripts": ["rstudio_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
-        },
 	{
             "type": "shell",
-            "scripts": ["x2go_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
-        },
-	{
-            "type": "shell",
-            "scripts": ["jenkins_provisioner.sh"],
+            "scripts": ["python_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]

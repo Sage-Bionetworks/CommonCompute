@@ -29,7 +29,7 @@ cd -
 
 # Copy pre-made module files - these were moved to the instance at the beginning
 # of the provision
-cp -R /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
+cp -Rf /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
 
 # OpenBlas
 mkdir /home/centos/src/OpenBlas
