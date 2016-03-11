@@ -43,9 +43,12 @@ cd /home/centos/src
 
 # Newer version of git
 yum remove -y git
+yum groupinstall -y "Development Tools"
+yum install -y gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel expat-devel curl-devel
+yum install -y gcc perl-ExtUtils-MakeMaker
 wget https://github.com/git/git/archive/v2.7.1.tar.gz
-tar xzf v2.7.1.tar.gz
+tar -xzf v2.7.1.tar.gz
 cd git-2.7.1
 make configure
-./configure --prefix=/usr --with-curl=/usr/bin/curl
+./configure --prefix=/usr/local --with-curl=/usr/bin/curl
 make all && make install && make clean
