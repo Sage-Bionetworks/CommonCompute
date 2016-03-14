@@ -11,7 +11,7 @@
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "us-east-1",
             "source_ami": "ami-9711c6fc",
-            "ssh_username": "ec2-user",
+            "ssh_username": "centos",
             "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
             "instance_type": "c3.4xlarge"
         }
