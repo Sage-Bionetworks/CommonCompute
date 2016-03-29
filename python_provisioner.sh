@@ -1,11 +1,12 @@
 #!/bin/bash -x
 
-# Need this for module loading
-source /etc/profile.d/modules.sh
+# # Need this for module loading
+# source /etc/profile.d/modules.sh
 
 # Needed for path to R when installing rpy
 # This is set for users except for root
 export PATH=$PATH:/usr/local/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/python/lib
 
 cd /root/src/
 
@@ -20,12 +21,13 @@ yum install -y libxml2 libxml2-devel libxslt libxslt-devel
 # Will require a module file
 yum install -y zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 
+mkdir /opt/python/
+
 wget https://www.python.org/ftp/python/2.7.10/Python-2.7.10.tgz
 tar xzf Python-2.7.10.tgz
 cd Python-2.7.10
-# mkdir /opt/Python-2.7.10/
 # ./configure --prefix=/opt/Python-2.7.10/ --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
-./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" && make && make altinstall
+./configure --enable-unicode=ucs4 --enable-shared LDFLAGS="-Wl,-rpath /usr/local/lib" --prefix /opt/python && make && make altinstall
 cd ..
 
 # ln -s /opt/Python-2.7.10/bin/python2.7 /opt/Python-2.7.10/bin/python
@@ -33,14 +35,14 @@ cd ..
 # # Requires copying of the module file at beginning of provisioning
 # module load python/2.7.10
 # curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /usr/local/bin/python2.7
+curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/python/bin/python2.7
 
-/usr/local/bin/easy_install-2.7 pip
-/usr/local/bin/pip2.7 install --upgrade pip
+/opt/python/bin/easy_install-2.7 pip
+/opt/python/bin/pip2.7 install --upgrade pip
 
 # Install numpy, using openblas
 cd /root/src
-/usr/local/bin/pip2.7 install -d /root/src numpy
+/opt/python/bin/pip2.7 install -d /root/src numpy
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -50,7 +52,7 @@ cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
+/opt/python/bin/python2.7 setup.py clean && /opt/python/bin/python2.7 setup.py build --fcompiler=gnu95 && /opt/python/bin/python2.7 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
@@ -61,7 +63,7 @@ export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
 # Install scipy, using openblas
 cd /root/src
-/usr/local/bin/pip2.7 install -d /root/src scipy
+/opt/python/bin/pip2.7 install -d /root/src scipy
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
@@ -71,7 +73,7 @@ cp /home/centos/numpy/site.cfg .
 
 unset CPPFLAGS
 unset LDFLAGS
-/usr/local/bin/python2.7 setup.py clean && /usr/local/bin/python2.7 setup.py build --fcompiler=gnu95 && /usr/local/bin/python2.7 setup.py install
+/opt/python/bin/python2.7 setup.py clean && /opt/python/bin/python2.7 setup.py build --fcompiler=gnu95 && /opt/python/bin/python2.7 setup.py install
 # python setup.py clean && python setup.py build && python setup.py install
 
 cd /root/src
@@ -83,7 +85,7 @@ rm -rf scipy*
 yum -y install libffi-devel openssl-devel
 
 # module load python/2.7.10
-/usr/local/bin/pip2.7 install -r /home/centos/python_requirements.txt
+/opt/python/bin/pip2.7 install -r /home/centos/python_requirements.txt
 # module unload python/2.7.10
 
 # # Install python 3
