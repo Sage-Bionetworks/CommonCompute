@@ -12,10 +12,15 @@ cd /root/src/
 
 yum makecache
 yum install -y ed less wget
-yum install -y python python-devel
 yum install -y openjpeg openjpeg-devel openjpeg-libs libjpeg-turbo libjpeg-turbo-devel
 yum install -y mesa-private-llvm mesa-private-llvm-devel
 yum install -y libxml2 libxml2-devel libxslt libxslt-devel
+
+## For Synapse Python client, fixes an InsecurePlatformWarning
+# module unload python
+# yum -y remove pyOpenSSL
+yum -y install libffi-devel openssl-devel
+
 
 # Install newer version of python 2
 # Will require a module file
@@ -78,11 +83,6 @@ unset LDFLAGS
 
 cd /root/src
 rm -rf scipy*
-
-## For Synapse Python client, fixes an InsecurePlatformWarning
-# module unload python
-# yum -y remove pyOpenSSL
-yum -y install libffi-devel openssl-devel
 
 # module load python/2.7.10
 /opt/python/bin/pip2.7 install -r /home/centos/python_requirements.txt
