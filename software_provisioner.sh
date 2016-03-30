@@ -6,7 +6,6 @@ mkdir /root/src/
 cd /root/src/
 
 yum remove -y R-core R-core-devel R-java R-java-devel
-# yum update -y
 yum install -y curl libcurl libcurl-devel readline readline-devel readline-static
 
 # OpenBlas
