@@ -47,7 +47,7 @@ curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/pyth
 
 # Install numpy, using openblas
 cd /root/src
-/opt/python/bin/pip2.7 install -d /root/src numpy
+/opt/python/bin/pip2.7 install -d /root/src numpy==1.10.4
 tar xzf numpy-*.tar.gz
 cd numpy-*
 
@@ -68,7 +68,7 @@ export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:$LD_LIBRARY_PATH
 
 # Install scipy, using openblas
 cd /root/src
-/opt/python/bin/pip2.7 install -d /root/src scipy
+/opt/python/bin/pip2.7 install -d /root/src scipy==0.17.0
 tar xzf scipy-*.tar.gz
 cd scipy-*
 
