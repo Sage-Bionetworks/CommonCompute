@@ -85,6 +85,10 @@ rm -rf scipy*
 # yum -y remove pyOpenSSL
 yum -y install libffi-devel openssl-devel
 
+module load python/2.7.11
+pip2.7 install -r /home/centos/python_requirements.txt
+module unload python/2.7.11
+
 # Install python 3
 # Can use a module file
 wget https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tgz
@@ -137,3 +141,8 @@ python setup.py clean && python setup.py build --fcompiler=gnu95 && python setup
 
 cd /home/centos/src
 rm -rf scipy*
+
+## Install additional requirements for python 3
+module load python/3.5.1
+pip3.5 install -r /home/centos/python3_requirements.txt
+module unload python/3.5.1

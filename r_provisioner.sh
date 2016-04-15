@@ -7,7 +7,7 @@ export PATH=$PATH:/usr/local/bin
 export LD_LIBRARY_PATH=/opt/OpenBLAS/lib:/usr/lib64/openmpi/lib:$LD_LIBRARY_PATH
 
 ## Install R from source
-yum -y install libpng-devel libjpeg-devel libtiff-devel ghostscript-devel curl libcurl libcurl-devel
+yum -y install libpng-devel libjpeg-devel libtiff-devel ghostscript-devel curl curl-devel libcurl libcurl-devel
 #yum install --enablerepo=epel -y R-core R-core-devel R-devel
 wget https://cran.r-project.org/src/base/R-3/R-3.2.3.tar.gz
 tar xzf R-3.2.3.tar.gz

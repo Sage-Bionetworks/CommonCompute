@@ -2,53 +2,41 @@
 
 # Provisioner for software
 
-# need to globally disable some packages, they break the install
-# in /etc/yum.conf:
-# exclude=cloud-init,git*,ganglia*
-cp /home/centos/yum/yum.conf /etc/
-
 mkdir /home/centos/src/
 cd /home/centos/src/
 
 yum remove -y R-core R-core-devel R-java R-java-devel
 yum update -y
-yum install -y curl libcurl libcurl-devel readline readline-devel readline-static
+yum install -y curl curl-devel libcurl libcurl-devel readline readline-devel readline-static
 
-wget "http://downloads.sourceforge.net/project/modules/Modules/modules-3.2.10/modules-3.2.10.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fmodules%2Ffiles%2F&ts=1433366084&use_mirror=iweb" -O modules-3.2.10.tar.gz
-tar xzf modules-3.2.10.tar.gz
-cd modules-3.2.10/
-./configure && make && make install && make clean
-cd -
-
-## For Sailfish
-# This needs the module file at modulefiles/Sailfish/0.6.3
-cd /opt/
-wget "https://github.com/kingsfordgroup/sailfish/releases/download/v0.6.3/Sailfish-0.6.3-Linux_x86-64.tar.gz" -O Sailfish-0.6.3-Linux_x86-64.tar.gz
-tar -xzf Sailfish-0.6.3-Linux_x86-64.tar.gz
-cd -
-
-# Copy pre-made module files - these were moved to the instance at the beginning
-# of the provision
-cp -Rf /home/centos/modulefiles/* /usr/share/Modules/modulefiles/
-
-# OpenBlas
+## OpenBlas from source
 mkdir /home/centos/src/OpenBlas
 cd /home/centos/src/OpenBlas
+
+# We need to update binutils in CentOS6 for latest kernels (see https://github.com/xianyi/OpenBLAS/wiki/faq#binutils)
+wget http://sourceforge.net/projects/slurm-roll/files/addons/6.1.1/rpms/pb-binutils224-2.24-1.x86_64.rpm
+rpm -Uvh pb-binutils224-2.24-1.x86_64.rpm
+export PATH=/opt/pb/binutils-2.24/bin:$PATH
+
 wget http://github.com/xianyi/OpenBLAS/archive/v0.2.15.tar.gz
 tar xzf v0.2.15.tar.gz
 cd OpenBLAS-0.2.15/
 make BINARY=64 FC=gfortran USE_THREAD=1 && make install && make clean
 
+# Copy openblas to lapak and blas library
+cp /opt/OpenBLAS/lib/libopenblas.so /opt/OpenBLAS/lib/liblapack.so.3
+cp /opt/OpenBLAS/lib/libopenblas.so /opt/OpenBLAS/lib/libblas.so.3
+
 cd /home/centos/src
 
-# Newer version of git
+## Newer version of git from source
 yum remove -y git
 yum groupinstall -y "Development Tools"
-yum install -y gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel expat-devel curl-devel
+yum install -y gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel expat-devel
 yum install -y gcc perl-ExtUtils-MakeMaker
 wget https://github.com/git/git/archive/v2.7.1.tar.gz
 tar -xzf v2.7.1.tar.gz
 cd git-2.7.1
 make configure
-./configure --prefix=/usr/local --with-curl=/usr/bin/curl
+./configure --prefix=/usr/local --with-curl
 make all && make install && make clean
