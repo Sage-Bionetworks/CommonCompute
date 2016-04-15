@@ -1,0 +1,105 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+    },
+
+    "builders": [
+        {
+            "type": "amazon-ebs",
+	    "ssh_pty" : "true",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "region": "us-east-1",
+            "source_ami": "ami-ac7343c6",
+            "ssh_username": "centos",
+            "ami_name": "CentOS 6 - SageCommonCompute {{timestamp}}",
+            "instance_type": "c3.4xlarge",
+	    "ami_block_device_mappings": [ {
+		"device_name": "/dev/sda1",
+		"volume_size": 100,
+		"delete_on_termination": false
+            } ],
+            "launch_block_device_mappings": [ {
+		"device_name": "/dev/sda1",
+		"volume_size": 100,
+		"delete_on_termination": false
+            } ]
+        }
+	
+    ],
+    "provisioners": [
+        {
+            "type": "file",
+            "source": "./numpy",
+            "destination": "/home/centos"
+        },
+	{
+            "type": "file",
+            "source": "./python_requirements.txt",
+            "destination": "/home/centos/python_requirements.txt"
+        },
+        {
+            "type": "file",
+            "source": "./python3_requirements.txt",
+            "destination": "/home/centos/python3_requirements.txt"
+        },
+        {
+            "type": "file",
+            "source": "./openblas.sh",
+            "destination": "/home/centos/openblas.sh"
+        },
+        {
+            "type": "file",
+            "source": "./bcbio.sh",
+            "destination": "/home/centos/bcbio.sh"
+        },
+        {
+            "type": "file",
+            "source": "./python.sh",
+            "destination": "/home/centos/python.sh"
+        },
+        {
+            "type": "shell",
+            "scripts": ["software_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["r_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["python_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["cloudbio_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["user_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
+            "scripts": ["finishup_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        }
+    ]
+}
