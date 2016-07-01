@@ -34,9 +34,10 @@ yum remove -y git
 yum groupinstall -y "Development Tools"
 yum install -y gettext-devel openssl-devel perl-CPAN perl-devel zlib-devel expat-devel
 yum install -y gcc perl-ExtUtils-MakeMaker
-wget https://github.com/git/git/archive/v2.7.1.tar.gz
-tar -xzf v2.7.1.tar.gz
-cd git-2.7.1
+
+wget https://github.com/git/git/archive/master.tar.gz
+tar -xzf master.tar.gz
+cd git-master
 make configure
 ./configure --prefix=/usr/local --with-curl
 make all && make install && make clean

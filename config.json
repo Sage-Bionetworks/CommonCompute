@@ -10,10 +10,10 @@
 	    "ssh_pty" : "true",
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
-            "region": "us-west-2",
-            "source_ami": "ami-e5b25985",
+            "region": "us-east-1",
+            "source_ami": "ami-a8535cc2",
             "ssh_username": "centos",
-            "ami_name": "CentOS 6.7 - SageCommonCompute {{timestamp}}",
+            "ami_name": "CentOS 6.7 - MetaNetCluster {{timestamp}}",
             "instance_type": "c4.xlarge",
 	    "ami_block_device_mappings": [ {
 		"device_name": "/dev/sda1",
@@ -29,25 +29,10 @@
 	
     ],
     "provisioners": [
-        {
-            "type": "file",
-            "source": "./modulefiles",
-            "destination": "/home/centos"
-        },
-        {
-            "type": "file",
-            "source": "./yum",
-            "destination": "/home/centos"
-        },
-        {
+         {
             "type": "file",
             "source": "./Rprofile.site",
             "destination": "/home/centos/Rprofile.site"
-        },
-	{
-            "type": "file",
-            "source": "./little.r",
-            "destination": "/home/centos/little.r"
         },
         {
             "type": "file",
@@ -59,10 +44,10 @@
             "source": "./openmpi.sh",
             "destination": "/home/centos/openmpi.sh"
         },
-	{
+        {
             "type": "file",
-            "source": "./rserver.conf",
-            "destination": "/home/centos/rserver.conf"
+            "source": "./rpackages_provisioner.sh",
+            "destination": "/home/centos/openmpi.sh"
         },
         {
             "type": "shell",
@@ -81,6 +66,13 @@
 	{
             "type": "shell",
             "scripts": ["r_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+	{
+            "type": "shell",
+            "scripts": ["x2go_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
