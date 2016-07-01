@@ -1,4 +1,5 @@
-# Sage Bionetworks CommonCompute Environment
+# Metanetwork CommonCompute Environment
+This branch has subset of codes from SageBio CommonCompute for metanetwork analysis
 
 ## Build
 
