@@ -47,7 +47,7 @@
         {
             "type": "file",
             "source": "./rpackages_provisioner.sh",
-            "destination": "/home/centos/openmpi.sh"
+            "destination": "/home/centos/rpackages_provisioner.sh"
         },
         {
             "type": "shell",
