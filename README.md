@@ -8,7 +8,9 @@
    ```
    packer build config.json
    ```
-   
+
+**The installation requires a larger disk than is provided by the default AMIs. A custom AMI with > 100GB is required.**
+
 Amazon AWS credentials are required to be set as environment variables for `AWS_ACCESS_KEY` and `AWS_SECRET_KEY`.
 
 If the build fails because an AMI cannot be found, check that source AMI is current, look here: https://github.com/awslabs/cfncluster/blob/master/amis.txt and update the `builders` section `source_ami` in [config.json](config.json).
