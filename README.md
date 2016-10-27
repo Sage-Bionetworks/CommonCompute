@@ -8,7 +8,7 @@
    ```
    packer build config.json
    ```
-
+If the build does not work, check that source AMI is current, look here: https://github.com/awslabs/cfncluster/blob/master/amis.txt
 ## CfnCluster
 
 This uses cfncluster to launch. See https://sagebionetworks.jira.com/wiki/display/COMCOMP/CommonCompute for info on how to do this.
