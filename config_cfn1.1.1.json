@@ -10,41 +10,30 @@
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "us-east-1",
-            "source_ami": "ami-340a5323",
+            "source_ami": "ami-ac7343c6",
             "ssh_username": "centos",
-            "ami_name": "CentOS 6.6 - SageCommonCompute {{timestamp}}",
+            "ami_name": "CentOS 6 - SageCommonCompute {{timestamp}}",
             "instance_type": "c3.4xlarge",
 	    "ami_block_device_mappings": [ {
 		"device_name": "/dev/sda1",
-		"volume_size": 250,
-		"delete_on_termination": true
+		"volume_size": 100,
+		"delete_on_termination": false
             } ],
             "launch_block_device_mappings": [ {
 		"device_name": "/dev/sda1",
-		"volume_size": 250,
-		"delete_on_termination": true
+		"volume_size": 100,
+		"delete_on_termination": false
             } ]
         }
 
     ],
-
     "provisioners": [
-        {
-            "type": "file",
-            "source": "./modulefiles",
-            "destination": "/home/centos"
-        },
         {
             "type": "file",
             "source": "./numpy",
             "destination": "/home/centos"
         },
-        {
-            "type": "file",
-            "source": "./yum",
-            "destination": "/home/centos"
-        },
-        {
+	{
             "type": "file",
             "source": "./python_requirements.txt",
             "destination": "/home/centos/python_requirements.txt"
@@ -65,11 +54,9 @@
             "destination": "/home/centos/bcbio.sh"
         },
         {
-            "type": "shell",
-            "scripts": ["user_provisioner.sh"],
-            "pause_before": "10s",
-            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
-            "only": ["amazon-ebs"]
+            "type": "file",
+            "source": "./python.sh",
+            "destination": "/home/centos/python.sh"
         },
         {
             "type": "shell",
@@ -101,11 +88,17 @@
         },
         {
             "type": "shell",
+            "scripts": ["user_provisioner.sh"],
+            "pause_before": "10s",
+            "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
+            "only": ["amazon-ebs"]
+        },
+        {
+            "type": "shell",
             "scripts": ["finishup_provisioner.sh"],
             "pause_before": "10s",
             "execute_command": "{{ .Vars }} sudo -E sh '{{ .Path }}'",
             "only": ["amazon-ebs"]
         }
-
     ]
 }

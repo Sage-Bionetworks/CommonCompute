@@ -92,7 +92,7 @@ requests
 rope
 ropemacs
 ropemode
-rpy2
+# rpy2
 rsa
 scikit-learn
 scp
