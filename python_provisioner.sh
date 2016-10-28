@@ -40,10 +40,7 @@ cd ..
 # # Requires copying of the module file at beginning of provisioning
 # module load python/2.7.10
 # curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/Python-2.7.10/bin/python2.7
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | /opt/python/bin/python2.7
-
-/opt/python/bin/easy_install-2.7 pip
-/opt/python/bin/pip2.7 install --upgrade pip
+curl https://bootstrap.pypa.io/get-pip.py | /opt/python/bin/python2.7
 
 # # Install numpy, using openblas
 # cd /root/src
