@@ -11,22 +11,22 @@
             "access_key": "{{user `aws_access_key`}}",
             "secret_key": "{{user `aws_secret_key`}}",
             "region": "us-east-1",
-            "source_ami": "ami-a8535cc2",
+            "source_ami": "ami-504b2047",
             "ssh_username": "centos",
             "ami_name": "CentOS 6.7 - MetaNetCluster {{timestamp}}",
             "instance_type": "c4.xlarge",
 	    "ami_block_device_mappings": [ {
 		"device_name": "/dev/sda1",
 		"volume_size": 100,
-		"delete_on_termination": false
+		"delete_on_termination": true
             } ],
             "launch_block_device_mappings": [ {
 		"device_name": "/dev/sda1",
 		"volume_size": 100,
-		"delete_on_termination": false
+		"delete_on_termination": true
             } ]
         }
-	
+
     ],
     "provisioners": [
          {
