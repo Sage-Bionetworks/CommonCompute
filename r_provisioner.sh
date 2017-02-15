@@ -13,9 +13,9 @@ module add openmpi-1.10-x86_64
 
 # Install zlib from source
 cd /home/centos/src
-wget http://zlib.net/zlib-1.2.8.tar.gz
-tar xzvf zlib-1.2.8.tar.gz
-cd zlib-1.2.8
+wget http://zlib.net/zlib-1.2.11.tar.gz
+tar xzvf zlib-1.2.11.tar.gz
+cd zlib-1.2.11
 ./configure --prefix=/usr/local/
 make && make install && make clean
 
@@ -29,10 +29,10 @@ cd /home/centos/src
 wget http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz
 tar xzvf bzip2-1.0.6.tar.gz
 cd bzip2-1.0.6
-make -f Makefile-libbz2_so 
+make -f Makefile-libbz2_so
 make install PREFIX=/usr/local
 make clean
- 
+
 # Install xz from source
 cd /home/centos/src
 wget http://tukaani.org/xz/xz-5.2.2.tar.gz
