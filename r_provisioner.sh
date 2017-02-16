@@ -13,9 +13,9 @@ module add openmpi-1.10-x86_64
 
 # Install zlib from source
 cd /home/centos/src
-wget http://zlib.net/zlib-1.2.11.tar.gz
-tar xzvf zlib-1.2.11.tar.gz
-cd zlib-1.2.11
+wget -O zlib-1.2.8.tar.gz "https://downloads.sourceforge.net/project/libpng/zlib/1.2.8/zlib-1.2.8.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Flibpng%2Ffiles%2Fzlib%2F1.2.8%2F&ts=1487202196&use_mirror=svwh"
+tar xzvf zlib-1.2.8.tar.gz
+cd zlib-1.2.8
 ./configure --prefix=/usr/local/
 make && make install && make clean
 
@@ -43,9 +43,9 @@ make -j3 && make install && make clean
 
 # Install pcre from source
 cd /home/centos/src
-wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.38.tar.gz
-tar xzvf pcre-8.38.tar.gz
-cd pcre-8.38
+wget ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.tar.gz
+tar xzvf pcre-8.39.tar.gz
+cd pcre-8.39
 ./configure --prefix=/usr/local --enable-utf8
 make -j3 && make install && make clean
 
