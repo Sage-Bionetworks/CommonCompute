@@ -17,7 +17,7 @@ Rscript -e 'library(devtools); install_github("brian-bot/githubr")'
 Rscript -e 'library(devtools); install_github("th1vairam/CovariateAnalysis@dev")'
 
 ## Install metanetwork from blogsdon
-Rscript -e 'library(devtools); install_github("blogsdon/metanetwork")'
+Rscript -e 'library(devtools); install_github("Sage-Bionetworks/metanetwork")'
 
 ## Install Rmpi
 export LD_LIBRARY_PATH=/usr/lib64/openmpi-1.10/lib:$LD_LIBRARY_PATH
